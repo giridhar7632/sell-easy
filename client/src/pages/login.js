@@ -1,9 +1,9 @@
 import Heading from '@/components/Heading'
 
-export default function Home() {
+export default function login() {
   return (
     <>
-    <Heading />
+      <Heading />
     </>
   )
 }
