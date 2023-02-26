@@ -1,9 +1,20 @@
-import Heading from '@/components/Heading'
+import Link from 'next/link'
 
-export default function notfound() {
+import Button from '../components/common/Button'
+import Layout from '../components/layout'
+
+const NotFound = () => {
   return (
-    <>
-      <Heading />
-    </>
+    <Layout>
+      <div className="flex h-[80%] w-full flex-col items-center justify-center">
+        <h1 className="text-clip text-8xl font-black">404</h1>
+        <h3 className="my-4 text-xl">Page not found!</h3>
+        <Link href={'/'} replace>
+          <Button>Go to Home</Button>
+        </Link>
+      </div>
+    </Layout>
   )
 }
+
+export default NotFound
