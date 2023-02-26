@@ -44,6 +44,17 @@ const Register = () => {
             </div>
           ) : null}
           <Input
+            label={'Username'}
+            type="text"
+            name="username"
+            placeholder={`Your unique identifier`}
+            aria-label="user-name"
+            register={register('username', {
+              required: `Username is required!`,
+            })}
+            error={errors?.password}
+          />
+          <Input
             label={'Email'}
             name={'email'}
             type="email"
@@ -82,7 +93,7 @@ const Register = () => {
           </Button>
         </form>
         <p className="mt-6">
-          {'Already have an account?'} <Link href={'register'}>Register now</Link>
+          {'Already have an account?'} <Link href={'login'}>Login</Link>
         </p>
       </div>
     </Layout>

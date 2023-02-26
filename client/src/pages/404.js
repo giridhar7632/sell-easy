@@ -1,7 +1,6 @@
 import Link from 'next/link'
-
-import Button from '../components/common/Button'
-import Layout from '../components/layout'
+import Button from '@/components/common/Button'
+import Layout from '@/components/layout'
 
 const NotFound = () => {
   return (

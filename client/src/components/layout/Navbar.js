@@ -11,7 +11,7 @@ const Navbar = () => {
         <div className="container-fluid">
           <Link className="mt-2 mr-1 flex items-center lg:mt-0" href="/">
             <Image src="/logo.png" height={30} width={30} alt="" loading="lazy" />{' '}
-            <span className="ml-2">Rosette links</span>
+            <span className="ml-2">Sell Easy</span>
           </Link>
         </div>
         {isAuth && (

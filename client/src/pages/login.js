@@ -3,10 +3,11 @@ import Router from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import Button from '../components/common/Button'
-import Input from '../components/common/Input'
-import Link from '../components/common/Link'
-import Layout from '../components/layout'
+import Button from '@/components/common/Button'
+import Input from '@/components/common/Input'
+import Link from '@/components/common/Link'
+import Layout from '@/components/layout'
+import { useAuth } from '@/utils/useAuth'
 
 const Login = () => {
   const {

@@ -16,10 +16,10 @@ export default function Index() {
           Sell Easy
         </Link>
         <div className="btn-group">
-          <Link href={'/Explore'}>
-            {/* <Button variant="text" style={{ background: 'white', marginRight: 10 }}> */}
-            Explore
-            {/* </Button> */}
+          <Link href={'/explore'}>
+            <Button variant="text" style={{ background: 'white', marginRight: 10 }}>
+              Explore
+            </Button>
           </Link>
           <Link href={'/login'}>
             <Button variant="text" style={{ background: 'white', marginRight: 10 }}>
