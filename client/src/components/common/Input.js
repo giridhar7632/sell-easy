@@ -10,7 +10,7 @@ const Input = ({ name, label, register, children, error, className, divClass, ..
         className={clsx([
           'form-control block w-full border border-solid bg-white bg-clip-padding px-4 py-2 font-normal text-gray-700 focus:ring-2',
           error ? 'border-red-300 ring ring-red-300' : 'border-gray-300',
-          'm-0 rounded-md transition ease-in-out focus:border-orange-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:ring-orange-300',
+          'm-0 rounded-md transition ease-in-out focus:border-yellow-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:ring-yellow-200',
           className,
         ])}
         name={name}
