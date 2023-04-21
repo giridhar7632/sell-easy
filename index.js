@@ -1,18 +1,17 @@
 import express from 'express'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
+dotenv.config()
 const app = express()
 const PORT = process.env.PORT | 5000
 
-app.get('/', (req, res) => {
-  res.json({
-    name: 'home',
-  })
+mongoose.connect(process.env.DB_URL).then(() => {
+  console.log('db connected')
 })
 
-app.get('/deekshith', (req, res) => {
-  res.json({
-    name: 'deekshith',
-  })
+app.post('/register', (req, res) => {
+  
 })
 
 app.listen(PORT, () => {
