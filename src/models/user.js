@@ -20,7 +20,6 @@ const userSchema = new Schema({
     room: { type: String },
     branch: { type: String }
   },
-  phone: { type: String },
   role: { type: String, default: 'user' },
   notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
   wishlist: [{ type: Schema.Types.ObjectId, ref: 'Product' }],

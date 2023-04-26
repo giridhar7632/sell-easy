@@ -50,9 +50,7 @@ app.use('/', mainRouter)
 app.use('/auth', authRouter)
 
 // connecting to mongodb atlas
-connect(MONGO_URI, {
-	useNewUrlParser: true,
-	useCreateIndex: true,
+connect(MONGO_URI, {	useNewUrlParser: true,
 	useUnifiedTopology: true,
 })
 	.then(() => logger.info('MongoDB connection is established successfully! 🎉'))

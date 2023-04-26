@@ -21,7 +21,7 @@ const {
 
 router.post('/register', async (req, res) => {
 	try {
-		const { name, email, password } = req.body
+		const { name, email, password, phoneNumber } = req.body
 
 		const user = await User.findOne({ email: email })
 		if (user)
@@ -35,6 +35,7 @@ router.post('/register', async (req, res) => {
 			name,
 			email,
 			password: passwordHash,
+			phoneNumber
 		})
 
 		const saved = await newUser.save()
