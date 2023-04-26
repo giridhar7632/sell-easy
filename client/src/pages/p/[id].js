@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
-import { Facebook, Instagram, Twitter } from '@/components/common/icons'
+import { Facebook, Instagram, Twitter } from '@/components/icons'
 import Link from '@/components/common/Link'
 import Layout from '@/components/layout'
 import { useAuth } from '@/utils/useAuth'
