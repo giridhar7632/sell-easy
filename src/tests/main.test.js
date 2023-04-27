@@ -15,7 +15,7 @@ describe('Authentication API', () => {
   describe('GET /protected', () => {
     it('should return "You are not logged in! 😢" if the user is not authenticated', async () => {
       const response = await request(app).get('/protected')
-      expect(response.status).toBe(500)
+      expect(response.status).toBe(404)
       expect(response.body.message).toBe('No token! 🤔')
     })
     it('should return "You are logged in! 🤗" with the user information if the user is authenticated', async () => {
