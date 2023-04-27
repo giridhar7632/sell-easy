@@ -50,10 +50,8 @@ app.use('/', mainRouter)
 app.use('/auth', authRouter)
 
 // connecting to mongodb atlas
-connect(MONGO_URI, {	useNewUrlParser: true,
-	useUnifiedTopology: true,
-})
-	.then(() => logger.info('MongoDB connection is established successfully! 🎉'))
-	.catch((err) => logger.error('Something went wrong: ' + err?.message))
+connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => logger.info('MongoDB connection is established successfully! 🎉'))
+  .catch((err) => logger.error('Something went wrong: ' + err?.message))
 
 module.exports = app
