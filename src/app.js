@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 // Routes
 const authRouter = require('./routes/auth')
 const mainRouter = require('./routes/index')
+const productRouter = require('./routes/product')
 const categoryRouter = require('./routes/category')
 const { MONGO_URI } = require('./utils/config')
 const logger = require('./utils/logger')
@@ -49,6 +50,7 @@ app.use(requestLogger)
 
 app.use('/', mainRouter)
 app.use('/auth', authRouter)
+app.use('/api/products', productRouter)
 app.use('/api/categories', categoryRouter)
 
 // connecting to mongodb atlas
