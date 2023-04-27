@@ -6,7 +6,7 @@ const { hash } = require('bcryptjs')
 const mongoose = require('mongoose')
 
 describe('Categories Endpoints', () => {
-  let tempUser, user, token, category
+  let tempUser, token, category
   beforeAll(async () => {
     await Category.deleteMany({})
     await User.deleteMany({})
@@ -20,7 +20,7 @@ describe('Categories Endpoints', () => {
 
     await tempUser.save()
 
-    user = await request(app)
+    const user = await request(app)
       .post('/auth/login')
       .send({
         email: 'talla_11915139@nitkkr.ac.in',
@@ -152,10 +152,10 @@ describe('Categories Endpoints', () => {
       expect(response.body.message).toBe('Category not found! 😢')
     })
 
-    test('should return 404 if user is not authenticated', async () => {
+    test('should return 401 if user is not authenticated', async () => {
       const response = await request(app).delete(`/api/categories/${category._id}`)
 
-      expect(response.status).toBe(404)
+      expect(response.status).toBe(401)
       expect(response.body.message).toBe('No token! 🤔')
     })
   })

@@ -6,7 +6,7 @@ const isAuth = async (req, res, next) => {
   const authorization = req.headers['authorization']
 
   if (!authorization)
-    return res.status(404).json({
+    return res.status(401).json({
       message: 'No token! 🤔',
       type: 'error',
     })
