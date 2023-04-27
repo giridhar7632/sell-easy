@@ -4,11 +4,12 @@ const { connect } = require('mongoose')
 const cookieParser = require('cookie-parser')
 
 // Routes
-const authRouter = require('./routes/auth.js')
-const mainRouter = require('./routes/index.js')
-const { MONGO_URI } = require('./utils/config.js')
+const authRouter = require('./routes/auth')
+const mainRouter = require('./routes/index')
+const categoryRouter = require('./routes/category')
+const { MONGO_URI } = require('./utils/config')
 const logger = require('./utils/logger')
-const { requestLogger } = require('./utils/middleware.js')
+const { requestLogger } = require('./utils/middleware')
 
 const app = express()
 
@@ -48,6 +49,7 @@ app.use(requestLogger)
 
 app.use('/', mainRouter)
 app.use('/auth', authRouter)
+app.use('/api/categories', categoryRouter)
 
 // connecting to mongodb atlas
 connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

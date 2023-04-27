@@ -6,7 +6,7 @@ const isAuth = async (req, res, next) => {
   const authorization = req.headers['authorization']
 
   if (!authorization)
-    return res.status(500).json({
+    return res.status(404).json({
       message: 'No token! 🤔',
       type: 'error',
     })
@@ -16,14 +16,14 @@ const isAuth = async (req, res, next) => {
   try {
     id = verify(token, ACCESS_TOKEN_SECRET).id
   } catch {
-    return res.status(500).json({
+    return res.status(403).json({
       message: 'Invalid token! 🤔',
       type: 'error',
     })
   }
 
   if (!id)
-    return res.status(500).json({
+    return res.status(401).json({
       message: 'Invalid token! 🤔',
       type: 'error',
     })
@@ -31,7 +31,7 @@ const isAuth = async (req, res, next) => {
   const user = await User.findById(id)
 
   if (!user)
-    return res.status(500).json({
+    return res.status(404).json({
       message: "User doesn't exist! 😢",
       type: 'error',
     })

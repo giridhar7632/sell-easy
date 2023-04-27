@@ -16,10 +16,12 @@ const { isAuth } = require('../utils/isAuth')
 const logger = require('../utils/logger')
 const { hash } = require('bcryptjs')
 
+// check the status of server
 router.get('/status', function (_req, res) {
   res.send('Live!! 👌')
 })
 
+// get protected routes
 router.get('/protected', isAuth, async (req, res) => {
   try {
     if (req.user)
@@ -43,6 +45,7 @@ router.get('/protected', isAuth, async (req, res) => {
   }
 })
 
+// verify email
 router.post('/verify-email/:id/:token', async (req, res) => {
   try {
     const { id, token } = req.params
@@ -98,6 +101,7 @@ router.post('/verify-email/:id/:token', async (req, res) => {
   }
 })
 
+// send password reset email
 router.post('/send-password-reset-email', async (req, res) => {
   try {
     const { email } = req.body
@@ -137,6 +141,7 @@ router.post('/send-password-reset-email', async (req, res) => {
   }
 })
 
+// reset password
 router.post('/reset-password/:id/:token', async (req, res) => {
   try {
     const { id, token } = req.params

@@ -19,6 +19,7 @@ const {
   createEmailVerificationUrl,
 } = require('../utils/email')
 
+// register a user
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, phoneNumber } = req.body
@@ -68,6 +69,7 @@ router.post('/register', async (req, res) => {
   }
 })
 
+// login a user
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body
@@ -105,6 +107,7 @@ router.post('/login', async (req, res) => {
   }
 })
 
+// logout a user
 router.post('/logout', (_req, res) => {
   res.clearCookie('refreshToken')
   return res.json({
@@ -113,6 +116,7 @@ router.post('/logout', (_req, res) => {
   })
 })
 
+// refresh token
 router.post('/refresh_token', async (req, res) => {
   try {
     const { refreshToken } = req.cookies
