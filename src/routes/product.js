@@ -144,14 +144,14 @@ router.delete('/:id', isAuth, async (req, res) => {
     }
 
     // Check if the user is the creator of the product
-    if (req.user._id !== product.seller) {
+    if (product.seller.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         message: "You're not authorized to delete this product! 🔒",
         type: 'error',
       })
     }
 
-    await product.remove()
+    await product.deleteOne()
 
     return res.status(200).json({
       message: 'Product deleted successfully! 🎉',

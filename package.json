@@ -55,11 +55,6 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testTimeout": 10000,
-    "testPathIgnorePatterns": [
-      "/src/tests/main.test.js",
-      "/src/tests/auth.test.js",
-      "/src/tests/category.test.js"
-    ]
+    "testTimeout": 10000
   }
 }

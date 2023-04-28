@@ -3,7 +3,7 @@ const app = require('../app')
 const Product = require('../models/product')
 const User = require('../models/user')
 const { hash } = require('bcryptjs')
-const { default: mongoose } = require('mongoose')
+const mongoose = require('mongoose')
 
 describe('Product Endpoints', () => {
   let token, tempUser
@@ -107,139 +107,57 @@ describe('Product Endpoints', () => {
     await Product.deleteMany({})
   }, 20000)
 
-  // describe('GET /products', () => {
-  //   test('should return a list of products', async () => {
-  //     const response = await request(app)
-  //       .get('/api/products')
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .query({ page: 1, limit: 2, search: 'phone', sort: '-price' })
-  //     expect(response.status).toBe(200)
-  //     expect(response.body.data).toHaveLength(2)
-  //     expect(response.body.data[0].name).toBe('iPhone X')
-  //     expect(response.body.data[1].name).toBe('Samsung Galaxy S9')
-  //   })
+  describe('GET /products', () => {
+    test('should return a list of products', async () => {
+      const response = await request(app)
+        .get('/api/products')
+        .set('Authorization', `Bearer ${token}`)
+      expect(response.status).toBe(200)
+      expect(response.body.data).toHaveLength(5)
+    })
 
-  //   test('should return an empty list if no products match the search query', async () => {
-  //     const response = await request(app)
-  //       .get('/api/products')
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .query({ search: 'foo' })
+    test('should return a list of products sorted popularity', async () => {
+      const response = await request(app)
+        .get('/api/products')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ sort: '-popularity' })
+      expect(response.status).toBe(200)
+      expect(response.body.data).toHaveLength(5)
+      expect(response.body.data[0].name).toBe('Harry Potter book')
+      expect(response.body.data[1].name).toBe('iPhone X')
+      expect(response.body.data[4].name).toBe('HP Spectre x360')
+    })
 
-  //     expect(response.status).toBe(200)
-  //     expect(response.body.data).toHaveLength(0)
-  //   })
+    test("should return a list of products matching 'phone'", async () => {
+      const response = await request(app)
+        .get('/api/products')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ page: 1, limit: 2, search: 'phone', sort: '-price' })
+      expect(response.status).toBe(200)
+      expect(response.body.data).toHaveLength(2)
+      expect(response.body.data[0].name).toBe('iPhone X')
+      expect(response.body.data[1].name).toBe('Samsung Galaxy S9')
+    })
 
-  //   test('should return a 401 error if not authenticated', async () => {
-  //     const response = await request(app).get('/api/products')
+    test('should return an empty list if no products match the search query', async () => {
+      const response = await request(app)
+        .get('/api/products')
+        .set('Authorization', `Bearer ${token}`)
+        .query({ search: 'foo' })
 
-  //     expect(response.status).toBe(401)
-  //     expect(response.body.message).toBeDefined()
-  //   })
-  // })
-  // describe('GET /products/:productId', () => {
-  //   let productId
-  //   beforeAll(async () => {
-  //     // Get product ID
-  //     const product = await Product.findOne({ name: 'iPhone X' })
-  //     productId = product._id
-  //   })
+      expect(response.status).toBe(200)
+      expect(response.body.data).toHaveLength(0)
+    })
 
-  //   test('returns a product with a valid ID', async () => {
-  //     const response = await request(app)
-  //       .get(`/api/products/${productId}`)
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .expect(200)
+    test('should return a 401 error if not authenticated', async () => {
+      const response = await request(app).get('/api/products')
 
-  //     expect(response.body._id).toEqual(productId.toString())
-  //     expect(response.body.name).toEqual('iPhone X')
-  //     expect(response.body.category).not.toBeUndefined()
-  //   })
+      expect(response.status).toBe(401)
+      expect(response.body.message).toBeDefined()
+    })
+  })
 
-  //   test('returns a 404 error for invalid product ID', async () => {
-  //     const response = await request(app)
-  //       .get(`/api/products/${new mongoose.Types.ObjectId()}`)
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .expect(404)
-
-  //     expect(response.body.message).toEqual('Product not found! 😢')
-  //     expect(response.body.type).toEqual('error')
-  //   })
-
-  //   test('returns a 401 error for unauthenticated user', async () => {
-  //     const response = await request(app).get(`/api/products/${productId}`).expect(401)
-
-  //     expect(response.body.message).toEqual('No token! 🤔')
-  //     expect(response.body.type).toEqual('error')
-  //   })
-
-  //   test('should return a 500 error when there is a server error', async () => {
-  //     jest.spyOn(Product, 'findById').mockImplementationOnce(() => {
-  //       throw new Error('Server error')
-  //     })
-
-  //     const res = await request(app)
-  //       .get(`/api/products/${productId}`)
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .expect(500)
-
-  //     expect(res.body.message).toEqual('Error fetching product! 😢')
-  //   })
-  // })
-
-  // describe('POST /products', () => {
-  //   const product = {
-  //     name: 'Test Product',
-  //     description: 'Test Description',
-  //     price: 999,
-  //     category: new mongoose.Types.ObjectId().toHexString(),
-  //     seller: new mongoose.Types.ObjectId().toHexString(),
-  //     image: 'https://source.unsplash.com/random/?testproduct',
-  //     media: [
-  //       'https://source.unsplash.com/random/?testproduct',
-  //       'https://source.unsplash.com/random/?testproduct',
-  //     ],
-  //   }
-
-  //   test('should add a new product', async () => {
-  //     const response = await request(app)
-  //       .post('/api/products')
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .send(product)
-  //       .expect(201)
-
-  //     expect(response.body.type).toBe('success')
-  //     expect(response.body.message).toBe('Product added successfully! 🎉')
-  //     expect(response.body.product).toBeDefined()
-  //     expect(response.body.product).toHaveProperty('name', 'Test Product')
-
-  //     const savedProduct = await Product.findById(response.body.product._id)
-  //     expect(savedProduct).toHaveProperty('name', 'Test Product')
-  //   })
-
-  //   test('should return an error if the product cannot be added', async () => {
-  //     jest.spyOn(Product.prototype, 'save').mockRejectedValue(new Error('Test Error'))
-
-  //     const response = await request(app)
-  //       .post('/api/products')
-  //       .set('Authorization', `Bearer ${token}`)
-  //       .send(product)
-  //       .expect(500)
-
-  //     expect(response.body.type).toBe('error')
-  //     expect(response.body.message).toBe('Error adding product! 😢')
-  //     expect(response.body.error).toBeDefined()
-  //     Product.prototype.save.mockRestore()
-  //   })
-
-  //   test('should return 401 if user is not authenticated', async () => {
-  //     const response = await request(app).post('/api/products').send(product).expect(401)
-
-  //     expect(response.body.message).toEqual('No token! 🤔')
-  //     expect(response.body.type).toEqual('error')
-  //   })
-  // })
-
-  describe('PUT /products', () => {
+  describe('GET /products/:productId', () => {
     let productId
     beforeAll(async () => {
       // Get product ID
@@ -247,56 +165,180 @@ describe('Product Endpoints', () => {
       productId = product._id
     })
 
-    // test('should return 404 if product does not exist', async () => {
-    //   const id = new mongoose.Types.ObjectId().toHexString()
-    //   const res = await request(app)
-    //     .put(`/api/products/${id}`)
-    //     .set('Authorization', `Bearer ${token}`)
-    //     .send({
-    //       name: 'iPhone XS',
-    //       price: 899,
-    //     })
+    test('returns a product with a valid ID', async () => {
+      const response = await request(app)
+        .get(`/api/products/${productId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
 
-    //   expect(res.status).toBe(404)
-    //   expect(res.body).toEqual({
-    //     message: 'Product not found! 😢',
-    //     type: 'error',
-    //   })
-    // })
+      expect(response.body._id).toEqual(productId.toString())
+      expect(response.body.name).toEqual('iPhone X')
+      expect(response.body.category).not.toBeUndefined()
+    })
 
-    // test('should return 401 if user is not the creator of the product', async () => {
-    //   const otherUser = new User({
-    //     name: 'John Doe',
-    //     email: 'johndoe@example.com',
-    //     password: await hash('password123', 12),
-    //     phoneNumber: '9876543210',
-    //   })
+    test('returns a 404 error for invalid product ID', async () => {
+      const response = await request(app)
+        .get(`/api/products/${new mongoose.Types.ObjectId()}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(404)
 
-    //   await otherUser.save()
+      expect(response.body.message).toEqual('Product not found! 😢')
+      expect(response.body.type).toEqual('error')
+    })
 
-    //   product.seller = otherUser._id
-    //   await product.save()
+    test('returns a 401 error for unauthenticated user', async () => {
+      const response = await request(app).get(`/api/products/${productId}`).expect(401)
 
-    //   const res = await request(app)
-    //     .put(`/api/products/${product._id}`)
-    //     .set('Authorization', `Bearer ${token}`)
-    //     .send({
-    //       name: 'iPhone XS',
-    //       price: 899,
-    //       description: 'A larger phone with one of the best screens',
-    //       seller: tempUser._id,
-    //       category: new mongoose.Types.ObjectId().toHexString(),
-    //       popularity: 200,
-    //       image: 'https://source.unsplash.com/random/?iphonexs',
-    //       media: [
-    //         'https://source.unsplash.com/random/?iphonexs',
-    //         'https://source.unsplash.com/random/?iphonexs',
-    //       ],
-    //     })
+      expect(response.body.message).toEqual('No token! 🤔')
+      expect(response.body.type).toEqual('error')
+    })
 
-    //   expect(res.status).toBe(401)
-    //   expect(res.body.message).toEqual('You are not authorized to perform this action! 🔒')
-    // })
+    test('should return a 500 error when there is a server error', async () => {
+      jest.spyOn(Product, 'findById').mockImplementationOnce(() => {
+        throw new Error('Server error')
+      })
+
+      const response = await request(app)
+        .get(`/api/products/${productId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(500)
+
+      expect(response.body.message).toEqual('Error fetching product! 😢')
+      // Product.findById.mockRestore()
+    })
+  })
+
+  describe('POST /products', () => {
+    const product = {
+      name: 'Test Product',
+      description: 'Test Description',
+      price: 999,
+      category: new mongoose.Types.ObjectId().toHexString(),
+      seller: new mongoose.Types.ObjectId().toHexString(),
+      image: 'https://source.unsplash.com/random/?testproduct',
+      media: [
+        'https://source.unsplash.com/random/?testproduct',
+        'https://source.unsplash.com/random/?testproduct',
+      ],
+    }
+
+    test('should add a new product', async () => {
+      const response = await request(app)
+        .post('/api/products')
+        .set('Authorization', `Bearer ${token}`)
+        .send(product)
+        .expect(201)
+
+      expect(response.body.type).toBe('success')
+      expect(response.body.message).toBe('Product added successfully! 🎉')
+      expect(response.body.product).toBeDefined()
+      expect(response.body.product).toHaveProperty('name', 'Test Product')
+
+      const savedProduct = await Product.findById(response.body.product._id)
+      expect(savedProduct).toHaveProperty('name', 'Test Product')
+    })
+
+    test('should return an error if the product cannot be added', async () => {
+      jest.spyOn(Product.prototype, 'save').mockRejectedValue(new Error('Test Error'))
+
+      const response = await request(app)
+        .post('/api/products')
+        .set('Authorization', `Bearer ${token}`)
+        .send(product)
+        .expect(500)
+
+      expect(response.body.type).toBe('error')
+      expect(response.body.message).toBe('Error adding product! 😢')
+      expect(response.body.error).toBeDefined()
+      Product.prototype.save.mockRestore()
+    })
+
+    test('should return an error if the product missing required values', async () => {
+      const response = await request(app)
+        .post('/api/products')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          description: 'Test Description',
+          price: 999,
+          image: 'https://source.unsplash.com/random/?testproduct',
+          media: [
+            'https://source.unsplash.com/random/?testproduct',
+            'https://source.unsplash.com/random/?testproduct',
+          ],
+        })
+        .expect(500)
+
+      expect(response.body.type).toBe('error')
+      expect(response.body.message).toBe('Error adding product! 😢')
+      expect(response.body.error).toBeDefined()
+    })
+
+    test('should return 401 if user is not authenticated', async () => {
+      const response = await request(app).post('/api/products').send(product).expect(401)
+
+      expect(response.body.message).toEqual('No token! 🤔')
+      expect(response.body.type).toEqual('error')
+    })
+  })
+
+  describe('PUT /products', () => {
+    let productId, token2
+    beforeAll(async () => {
+      // Get product ID
+      const product = await Product.findOne({ name: 'iPhone X' })
+      productId = product._id
+    })
+
+    test('should return 404 if product does not exist', async () => {
+      const id = new mongoose.Types.ObjectId().toHexString()
+      const response = await request(app)
+        .put(`/api/products/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: 'iPhone XS',
+          price: 899,
+        })
+
+      expect(response.status).toBe(404)
+      expect(response.body).toEqual({
+        message: 'Product not found! 😢',
+        type: 'error',
+      })
+    })
+
+    test('should return 401 if user is not the creator of the product', async () => {
+      const tempUser2 = new User({
+        name: 'Jane Doe',
+        email: 'jane.doe@example.com',
+        password: await hash('password123', 12),
+        phoneNumber: '12345678620',
+      })
+
+      await tempUser2.save()
+
+      const user = await request(app)
+        .post('/auth/login')
+        .send({
+          email: 'jane.doe@example.com',
+          password: 'password123',
+        })
+        .expect(200)
+
+      token2 = user.body.accessToken
+
+      const response = await request(app)
+        .put(`/api/products/${productId}`)
+        .set('Authorization', `Bearer ${token2}`)
+        .send({
+          name: 'iPhone XS',
+          price: 899,
+          description: 'A larger phone with one of the best screens',
+        })
+        .expect(401)
+
+      expect(response.body.message).toEqual('You are not authorized to perform this action! 🔒')
+      expect(response.body.type).toBe('error')
+    })
 
     test('should return 200 if product is updated successfully', async () => {
       const updates = { name: 'Updated Product Name' }
@@ -323,7 +365,7 @@ describe('Product Endpoints', () => {
   })
 
   describe('DELETE /products/:id', () => {
-    let token2, productId
+    let token2, productId, product
 
     beforeAll(async () => {
       const tempProduct = new Product({
@@ -342,19 +384,8 @@ describe('Product Endpoints', () => {
 
       await tempProduct.save()
       productId = tempProduct._id
-    })
 
-    test('should delete a product successfully', async () => {
-      await request(app)
-        .delete(`/api/products/${productId}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(200)
-
-      console.log(response.body)
-
-      const deletedProduct = await Product.findById(productId)
-
-      expect(deletedProduct).toBeFalsy()
+      product = await Product.findById(productId)
     })
 
     test("should return a 404 error if the product doesn't exist", async () => {
@@ -389,12 +420,6 @@ describe('Product Endpoints', () => {
 
       token2 = user.body.accessToken
 
-      const product = await Product.findById(productId)
-
-      // Set the product creator to a different user
-      product.seller = tempUser2._id
-      await product.save()
-
       const response = await request(app)
         .delete(`/api/products/${productId}`)
         .set('Authorization', `Bearer ${token2}`)
@@ -402,6 +427,17 @@ describe('Product Endpoints', () => {
 
       expect(response.body.message).toBe("You're not authorized to delete this product! 🔒")
       expect(response.body.type).toBe('error')
+    })
+
+    test('should delete a product successfully', async () => {
+      await request(app)
+        .delete(`/api/products/${productId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+
+      const deletedProduct = await Product.findById(productId)
+
+      expect(deletedProduct).toBeFalsy()
     })
   })
 })
