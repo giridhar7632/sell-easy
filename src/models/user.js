@@ -14,7 +14,7 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    refreshToken: String,
+    refreshToken: { type: String, select: false },
     profileImage: { type: String },
     address: {
       hostel: { type: String },
@@ -26,6 +26,10 @@ const userSchema = new Schema(
       default: 0,
     },
     role: { type: String, default: 'user' },
+    rating: {
+      type: Number,
+      default: 0,
+    },
     notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
     wishlist: [{ type: Schema.Types.ObjectId, ref: 'Wishlist' }],
     cart: { type: Schema.Types.ObjectId, ref: 'Cart' },
@@ -38,9 +42,9 @@ const userSchema = new Schema(
 )
 
 // hook to update popularity
-userSchema.pre('findById', function (next) {
-  this.model.updateMany(this.getFilter(), { $inc: { popularity: 1 } }).exec()
-  next()
-})
+// userSchema.pre(/^find/, function (next) {
+//   this.updateOne({}, { $inc: { popularity: 1 } }).exec()
+//   next()
+// })
 
 module.exports = model('User', userSchema)

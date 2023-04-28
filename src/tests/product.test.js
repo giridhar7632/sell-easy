@@ -23,7 +23,7 @@ describe('Product API', () => {
     await tempUser.save()
 
     const user = await request(app)
-      .post('/auth/login')
+      .post('/api/auth/login')
       .send({
         email: 'talla_11915139@nitkkr.ac.in',
         password: 'password123',
@@ -317,7 +317,7 @@ describe('Product API', () => {
       await tempUser2.save()
 
       const user = await request(app)
-        .post('/auth/login')
+        .post('/api/auth/login')
         .send({
           email: 'jane.doe@example.com',
           password: 'password123',
@@ -411,7 +411,7 @@ describe('Product API', () => {
       await tempUser2.save()
 
       const user = await request(app)
-        .post('/auth/login')
+        .post('/api/auth/login')
         .send({
           email: 'john.doe@example.com',
           password: 'password123',

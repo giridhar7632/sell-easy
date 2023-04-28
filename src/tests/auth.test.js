@@ -8,7 +8,7 @@ describe('Authentication API', () => {
     test('Should create a new user', async () => {
       await User.deleteMany({})
       const response = await request(app)
-        .post('/auth/register')
+        .post('/api/auth/register')
         .send({
           name: 'Giridhar',
           email: 'talla_11915139@nitkkr.ac.in',
@@ -22,7 +22,7 @@ describe('Authentication API', () => {
     }, 20000)
     test('Should return an error if the user already exists', async () => {
       const response = await request(app)
-        .post('/auth/register')
+        .post('/api/auth/register')
         .send({
           name: 'Giridhar',
           email: 'talla_11915139@nitkkr.ac.in',
@@ -36,7 +36,7 @@ describe('Authentication API', () => {
   describe('POST /login', () => {
     test('Should log in a user with valid credentials', async () => {
       const response = await request(app)
-        .post('/auth/login')
+        .post('/api/auth/login')
         .send({
           email: 'talla_11915139@nitkkr.ac.in',
           password: 'password123',
@@ -47,7 +47,7 @@ describe('Authentication API', () => {
     })
     test('Should return an error if the user does not exist', async () => {
       const response = await request(app)
-        .post('/auth/login')
+        .post('/api/auth/login')
         .send({
           email: 'nonexistent.user@example.com',
           password: 'password123',
@@ -57,7 +57,7 @@ describe('Authentication API', () => {
     })
     test('Should return an error if the password is incorrect', async () => {
       const response = await request(app)
-        .post('/auth/login')
+        .post('/api/auth/login')
         .send({
           email: 'talla_11915139@nitkkr.ac.in',
           password: 'wrongpassword',
@@ -68,7 +68,7 @@ describe('Authentication API', () => {
   })
   describe('POST /logout', () => {
     test('Should clear the refresh token cookie', async () => {
-      const response = await request(app).post('/auth/logout').expect(200)
+      const response = await request(app).post('/api/auth/logout').expect(200)
       expect(response.body.message).toEqual('Logged out successfully! 🤗')
       expect(response.headers['set-cookie']).toEqual(
         expect.arrayContaining(['refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'])
@@ -89,7 +89,7 @@ describe('Authentication API', () => {
       await tempUser.save()
 
       const user = await request(app)
-        .post('/auth/login')
+        .post('/api/auth/login')
         .send({
           email: 'talla_11915139@nitkkr.ac.in',
           password: 'password123',
@@ -102,7 +102,7 @@ describe('Authentication API', () => {
         .join(';')
 
       const response = await request(app)
-        .post('/auth/refresh_token')
+        .post('/api/auth/refresh_token')
         .set('Cookie', `${refreshToken}`)
         .expect(200)
 
@@ -113,7 +113,7 @@ describe('Authentication API', () => {
     }, 50000)
 
     test('Should return 404 if no refresh token is provided', async () => {
-      const response = await request(app).post('/auth/refresh_token').expect(404)
+      const response = await request(app).post('/api/auth/refresh_token').expect(404)
       expect(response.body.accessToken).not.toBeDefined()
       expect(response.body.user).not.toBeDefined()
       expect(response.body.message).toBe('No refresh token! 🤔')
@@ -121,7 +121,7 @@ describe('Authentication API', () => {
 
     test('Should return 401 if the refresh token is invalid', async () => {
       const response = await request(app)
-        .post('/auth/refresh_token')
+        .post('/api/auth/refresh_token')
         .set('Cookie', 'refreshToken=invalid_token')
         .expect(401)
 

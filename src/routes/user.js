@@ -1,13 +1,25 @@
 const express = require('express')
 const router = express.Router()
 const { isAuth } = require('../utils/isAuth')
-// const User = require('../models/user')
+const Review = require('../models/review')
+const Product = require('../models/product')
+const User = require('../models/user')
 
 // Define route for getting user's own profile information
-router.get('/', isAuth, async (req, res) => {
+// 644b9943abb40e22051e672a : 5139
+// 644bb98031828d3660be9c60 : 2002
+router.get('/me', isAuth, async (req, res) => {
   try {
-    const user = req.user
-    // await user.populate(['wishlist', 'orders'])
+    const user = await User.findById(req.user._id)
+      .populate({
+        path: 'reviews',
+        populate: {
+          path: 'reviewer',
+          select: '_id name profileImage',
+          model: 'User',
+        },
+      })
+      .exec()
     // If user is not found, return 404 error
     if (!user) {
       return res.status(404).json({
@@ -29,7 +41,7 @@ router.get('/', isAuth, async (req, res) => {
 })
 
 // Define route for updating user's own profile information
-router.put('/', isAuth, async (req, res) => {
+router.put('/me', isAuth, async (req, res) => {
   try {
     const user = req.user
     // If user is not found, return 404 error
@@ -57,6 +69,67 @@ router.put('/', isAuth, async (req, res) => {
       message: 'Internal server error! 😢',
       type: 'error',
     })
+  }
+})
+
+// Get user profile details
+router.get('/:id', isAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+      .populate('wishlist')
+      .populate({
+        path: 'reviews',
+        populate: {
+          path: 'reviewer',
+          select: '_id name profileImage',
+          model: 'User',
+        },
+      })
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    res.json(user)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
+// Get reviews given to user
+router.get('/:id/reviews', isAuth, async (req, res) => {
+  try {
+    const reviews = await Review.find({
+      'target.id': req.params.id,
+      'target.type': 'User',
+    })
+      .populate('reviewer', '_id name profileImage')
+      .sort({ createdAt: -1 })
+
+    console.log({ reviews })
+
+    res.json(reviews)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
+// Get products listed by user
+router.get('/:id/products', async (req, res) => {
+  try {
+    const products = await Product.find({ seller: req.params.id })
+      .populate('category')
+      .populate('reviews')
+      .populate('seller', '_id name profileImage')
+
+    console.log({ products })
+
+    res.json(products)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
   }
 })
 

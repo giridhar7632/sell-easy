@@ -4,6 +4,8 @@ const logger = require('../utils/logger')
 const Product = require('../models/product')
 const { isAuth } = require('../utils/isAuth')
 const getPaginatedData = require('../utils/pagination')
+const Review = require('../models/review')
+const mongoose = require('mongoose')
 
 // get all products
 // GET /products?page=1&limit=10&search=phone&sort=-price
@@ -15,13 +17,13 @@ router.get('/', isAuth, async (req, res) => {
           $or: [
             { name: { $regex: search, $options: 'i' } },
             { description: { $regex: search, $options: 'i' } },
-            // {
-            //   category: {
-            //     $in: await Category.find({
-            //       name: { $regex: search, $options: 'i' },
-            //     }).distinct('_id'),
-            //   },
-            // },
+            {
+              category: {
+                $in: await Category.find({
+                  name: { $regex: search, $options: 'i' },
+                }).distinct('_id'),
+              },
+            },
           ],
         }
       : {}
@@ -30,7 +32,7 @@ router.get('/', isAuth, async (req, res) => {
       page,
       limit,
       sort,
-      populate: ['seller', 'category'],
+      populate: [{ path: 'seller', select: '_id name profileImage', model: 'User' }, 'category'],
     })
 
     res.status(200).json(paginatedProducts)
@@ -44,7 +46,7 @@ router.get('/', isAuth, async (req, res) => {
 router.get('/:productId', isAuth, async (req, res) => {
   try {
     const productId = req.params.productId
-    const product = await Product.findById(productId)
+    const product = await Product.findById(productId).populate('seller', '_id name profileImage')
 
     if (!product) {
       return res.status(404).json({
@@ -65,6 +67,58 @@ router.get('/:productId', isAuth, async (req, res) => {
   }
 })
 
+// get reviews of a product
+router.get('/:productId/reviews', async (req, res) => {
+  try {
+    const productId = req.params.productId
+
+    // Check if the product exists in the database
+    const product = await Product.findById(productId)
+    if (!product) {
+      return res.status(404).json({
+        message: 'Product not found!',
+        type: 'error',
+      })
+    }
+
+    // Start a database transaction
+    const session = await mongoose.startSession()
+    session.startTransaction()
+
+    try {
+      // Get all reviews for the product
+      const reviews = await Review.find({ 'target.type': 'Product', 'target.id': productId })
+        .populate('reviewer', '_id name profileImage')
+        .sort({ createdAt: -1 })
+        .session(session)
+
+      // Commit the transaction
+      await session.commitTransaction()
+
+      res.json({
+        reviews,
+      })
+    } catch (error) {
+      // Rollback the transaction if an error occurs
+      await session.abortTransaction()
+      console.error(error)
+      res.status(500).json({
+        message: 'Error updating database! 😢',
+        type: 'error',
+      })
+    } finally {
+      // End the transaction session
+      session.endSession()
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Error fetching reviews! 😢',
+      type: 'error',
+    })
+  }
+})
+
 // add a product
 router.post('/', isAuth, async (req, res) => {
   try {
@@ -75,6 +129,13 @@ router.post('/', isAuth, async (req, res) => {
 
     // Save the new product document to the database
     await newProduct.save()
+
+    const user = req.user
+
+    if (user.role === 'user') {
+      user.role = 'seller'
+      await user.save()
+    }
 
     return res.status(201).json({
       message: 'Product added successfully! 🎉',

@@ -20,7 +20,7 @@ describe('User API', () => {
     await tempUser.save()
 
     const response = await request(app)
-      .post('/auth/login')
+      .post('/api/auth/login')
       .send({
         email: 'talla_11915139@nitkkr.ac.in',
         password: 'password123',

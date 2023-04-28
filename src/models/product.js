@@ -36,6 +36,7 @@ const productSchema = new Schema(
       type: Number,
       default: 0,
     },
+    rating: { type: Number, default: 0 },
     seller: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
     reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],

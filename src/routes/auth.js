@@ -144,7 +144,7 @@ router.post('/refresh_token', async (req, res) => {
         type: 'error',
       })
     }
-    const user = await User.findById(id)
+    const user = await User.findById(id).select('refreshToken')
 
     if (!user)
       return res.status(404).json({
