@@ -31,6 +31,7 @@ const userSchema = new Schema(
     cart: { type: Schema.Types.ObjectId, ref: 'Cart' },
     orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
     messages: [{ type: Schema.Types.ObjectId, ref: 'Message' }],
   },
   { timestamps: true }

@@ -1,10 +1,16 @@
 const { Schema, model } = require('mongoose')
 
 const reviewSchema = new Schema({
-  product: {
-    type: Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true,
+  target: {
+    type: {
+      type: String,
+      enum: ['Product', 'Seller'],
+      required: true,
+    },
+    id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
   },
   reviewer: {
     type: Schema.Types.ObjectId,
