@@ -340,8 +340,8 @@ const emailTemplate = ({ title, subject, body, link, btn, footer }) => `
 																</tr>
 															</tbody>
 															${
-																!!btn
-																	? `<tbody>
+                                !!btn
+                                  ? `<tbody>
 																<tr>
 																	<td
 																		style="font-size: 0"
@@ -415,8 +415,8 @@ const emailTemplate = ({ title, subject, body, link, btn, footer }) => `
 																	</td>
 																</tr>
 															</tbody>`
-																	: ''
-															}
+                                  : ''
+                              }
 															<tbody>
 																<tr>
 																	<td
@@ -440,11 +440,7 @@ const emailTemplate = ({ title, subject, body, link, btn, footer }) => `
 																		"
 																		valign="top"
 																	>
-																		${
-																			!footer
-																				? 'If you didn’t ask for this email, you can ignore this email.'
-																				: footer
-																		}
+																		${!footer ? 'If you didn’t ask for this email, you can ignore this email.' : footer}
 																	</td>
 																</tr>
 															</tbody>

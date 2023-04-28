@@ -5,7 +5,7 @@ const User = require('../models/user')
 const { hash } = require('bcryptjs')
 const mongoose = require('mongoose')
 
-describe('Product Endpoints', () => {
+describe('Product API', () => {
   let token, tempUser
 
   // Define a beforeAll hook to connect to the database and set up test data

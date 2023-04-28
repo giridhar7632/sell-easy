@@ -5,7 +5,7 @@ const User = require('../models/user')
 const { hash } = require('bcryptjs')
 const mongoose = require('mongoose')
 
-describe('Categories Endpoints', () => {
+describe('Categories API', () => {
   let tempUser, token, category
   beforeAll(async () => {
     await Category.deleteMany({})

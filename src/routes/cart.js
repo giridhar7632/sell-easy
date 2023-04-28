@@ -111,7 +111,7 @@ router.delete('/:id', isAuth, async (req, res) => {
       cart: updatedCart,
       total: cartTotal,
     })
-  } catch (err) {
+  } catch (error) {
     logger.error(error)
     return res.status(500).json({ message: 'Internal server error! 😢', type: 'error' })
   }
