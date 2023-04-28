@@ -28,7 +28,7 @@ const userSchema = new Schema(
     role: { type: String, default: 'user' },
     notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
     wishlist: [{ type: Schema.Types.ObjectId, ref: 'Wishlist' }],
-    cart: [{ type: Schema.Types.ObjectId, ref: 'Cart' }],
+    cart: { type: Schema.Types.ObjectId, ref: 'Cart' },
     orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
     messages: [{ type: Schema.Types.ObjectId, ref: 'Message' }],
