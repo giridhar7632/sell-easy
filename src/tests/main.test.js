@@ -14,7 +14,7 @@ describe('Authentication API', () => {
   })
   describe('GET /protected', () => {
     it('should return "You are not logged in! 😢" if the user is not authenticated', async () => {
-      const response = await request(app).get('/protected')
+      const response = await request(app).get('/api/protected')
       expect(response.status).toBe(401)
       expect(response.body.message).toBe('No token! 🤔')
     })
@@ -36,7 +36,7 @@ describe('Authentication API', () => {
         })
         .expect(200)
       const response = await request(app)
-        .get('/protected')
+        .get('/api/protected')
         .set('Authorization', `Bearer ${user.body.accessToken}`)
       expect(response.status).toBe(200)
       expect(response.body.message).toBe('You are logged in! 🤗')
@@ -44,7 +44,7 @@ describe('Authentication API', () => {
   })
   describe('POST /verify-email/:id/:token', () => {
     it('should return "User doesn\'t exist! 😢" if the user ID is invalid', async () => {
-      const response = await request(app).post('/verify-email/123/abc')
+      const response = await request(app).post('/api/verify-email/123/abc')
       expect(response.status).toBe(500)
       expect(response.body.message).toBe('Error sending email!')
     })
@@ -58,7 +58,7 @@ describe('Authentication API', () => {
         phoneNumber: '1234567890',
       })
       await user.save()
-      const response = await request(app).post(`/verify-email/${user._id}/abc`)
+      const response = await request(app).post(`/api/verify-email/${user._id}/abc`)
       expect(response.status).toBe(500)
       expect(response.body.type).toBe('error')
       expect(response.body.message).toBe('Invalid token! 😢')
@@ -76,7 +76,7 @@ describe('Authentication API', () => {
       // Generate a valid token for the user's email
       // const user = await User.findOne({ email: 'talla_11915139@nitkkr.ac.in' })
       const token = createEmailVerificationToken({ _id: user._id, email: user.email })
-      const response = await request(app).post(`/verify-email/${user._id}/${token}`)
+      const response = await request(app).post(`/api/verify-email/${user._id}/${token}`)
       expect(response.status).toBe(200)
       expect(response.body.message).toBe('Email verification success! 📧')
       // Check that the user's "verified" flag has been set to true
@@ -101,7 +101,7 @@ describe('Authentication API', () => {
     describe('POST /send-password-reset-email', () => {
       it('should return an error message if user does not exist', async () => {
         const response = await request(app)
-          .post('/send-password-reset-email')
+          .post('/api/send-password-reset-email')
           .send({ email: 'nonexistent@example.com' })
         expect(response.status).toBe(401)
         expect(response.body.type).toBe('error')
@@ -109,7 +109,7 @@ describe('Authentication API', () => {
       })
       it('should send a password reset email if user exists', async () => {
         const response = await request(app)
-          .post('/send-password-reset-email')
+          .post('/api/send-password-reset-email')
           .send({ email: testUser.email })
         expect(response.status).toBe(200)
         expect(response.body.type).toBe('success')
@@ -125,7 +125,7 @@ describe('Authentication API', () => {
 
       it('should return an error message if user does not exist', async () => {
         const response = await request(app)
-          .post(`/reset-password/nonexistent/${passwordResetToken}`)
+          .post(`/api/reset-password/nonexistent/${passwordResetToken}`)
           .send({ newPassword: 'newpassword' })
         expect(response.status).toBe(500)
         expect(response.body.type).toBe('error')
@@ -134,7 +134,7 @@ describe('Authentication API', () => {
 
       it('should return an error message if token is invalid', async () => {
         const response = await request(app)
-          .post(`/reset-password/${testUser._id}/invalid-token`)
+          .post(`/api/reset-password/${testUser._id}/invalid-token`)
           .send({ newPassword: 'newpassword' })
         expect(response.status).toBe(500)
         expect(response.body.type).toBe('error')
@@ -143,7 +143,7 @@ describe('Authentication API', () => {
 
       it('should reset the password and send a confirmation email if token is valid', async () => {
         const response = await request(app)
-          .post(`/reset-password/${testUser._id}/${passwordResetToken}`)
+          .post(`/api/reset-password/${testUser._id}/${passwordResetToken}`)
           .send({ newPassword: 'newpassword' })
         expect(response.status).toBe(200)
         expect(response.body.type).toBe('success')

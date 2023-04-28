@@ -1,11 +1,10 @@
 import React from 'react'
 
 function GenerateIcon(data, props) {
-  return React.createElement(
-    data.tag,
-    { ...data.attr, ...props },
-    data.child.map((item) => React.createElement(item.tag, { ...item.attr, key: Math.random() }))
+  const children = data.child.map((item) =>
+    React.createElement(item.tag, { ...item.attr, key: Math.random() })
   )
+  return React.createElement(data.tag, { ...data.attr, ...props }, children)
 }
 
 export function Search(props) {

@@ -10,9 +10,9 @@ export default function Button({
   ...attributes
 }) {
   const variantClassname = clsx({
-    ['bg-primary hover:bg-yellow-400 text-gray-900 disabled:bg-primary disabled:ring-0']:
+    ['bg-teal-500 hover:bg-teal-600 text-white disabled:bg-teal-500 disabled:ring-0']:
       variant === 'primary',
-    ['text-primary disabled:text-primary bg-white bg-opacity-10 backdrop-blur-sm']:
+    ['text-teal-500 disabled:text-teal-500 bg-white bg-opacity-10 backdrop-blur-sm']:
       variant === 'text',
   })
 
@@ -20,7 +20,7 @@ export default function Button({
     <button
       {...attributes}
       className={clsx(
-        'inline-block cursor-pointer rounded-md px-6 py-2 text-sm font-semibold leading-snug ring-yellow-200 transition duration-150 ease-in-out hover:ring focus:ring',
+        'inline-block cursor-pointer rounded-md px-6 py-2 text-sm font-semibold leading-snug ring-teal-200 transition duration-150 ease-in-out hover:ring focus:ring',
         variantClassname,
         className
       )}

@@ -367,7 +367,7 @@ const emailTemplate = ({ title, subject, body, link, btn, footer }) => `
 																					font-family: 'Poppins', Helvetica,
 																						Arial, sans-serif;
 																					font-size: 16px;
-																					color: #805ad5;
+																					color: #14b8a6;
 																				"
 																			>
 																				<table
@@ -393,10 +393,10 @@ const emailTemplate = ({ title, subject, body, link, btn, footer }) => `
 																											<td
 																												style="
 																													padding: 10px 30px;
-																													background-color: #e9d8fd;
+																													background-color: #ccfbf1;
 																													border-radius: 10px;
 																												"
-																												bgcolor="#e9d8fd"
+																												bgcolor="#ccfbf1"
 																												valign="top"
 																												align="center"
 																											>

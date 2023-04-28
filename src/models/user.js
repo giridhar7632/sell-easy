@@ -30,6 +30,11 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
+    socials: {
+      facebook: { type: String },
+      instagram: { type: String },
+      twitter: { type: String },
+    },
     notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }],
     wishlist: [{ type: Schema.Types.ObjectId, ref: 'Wishlist' }],
     cart: { type: Schema.Types.ObjectId, ref: 'Cart' },

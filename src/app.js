@@ -19,27 +19,24 @@ const { requestLogger } = require('./utils/middleware')
 const app = express()
 
 // middleware functions
-// app.use((req, res, next) => {
-// 	const allowedOrigins = [
-// 		'http://127.0.0.1:3000',
-// 		'http://localhost:3000',
-// 		'http://localhost:5000',
-// 		'http://127.0.0.1:5000',
-// 		'http://localhost:8080',
-// 			]
-// 	const origin = req.headers.origin
-// 	if (allowedOrigins.includes(origin)) {
-// 		res.setHeader('Access-Control-Allow-Origin', origin)
-// 	}
-// 	// res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
-// 	res.setHeader(
-// 		'Access-Control-Allow-Methods',
-// 		'OPTIONS, GET, POST, PUT, PATCH, DELETE'
-// 	)
-// 	res.setHeader('Access-Control-Allow-Credentials', true)
-// 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-// 	next()
-// })
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'http://localhost:8080',
+  ]
+  const origin = req.headers.origin
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
+  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  next()
+})
 // app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -52,7 +49,7 @@ app.use(requestLogger)
 // 	})
 // )
 
-app.use('/', mainRouter)
+app.use('/api', mainRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/products', productRouter)
 app.use('/api/categories', categoryRouter)
