@@ -29,6 +29,7 @@ const sendAccessToken = (_req, res, user, accessToken) => {
 const sendRefreshToken = (res, refreshToken) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // expires in 7 days
   })
 }
 
