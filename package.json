@@ -64,5 +64,8 @@
       "/src/tests/user.test.js",
       "/src/tests/product.test.js"
     ]
+  },
+  "engines": {
+    "node": ">=16.14"
   }
 }
