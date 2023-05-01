@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 
 // get all products
 // GET /products?page=1&limit=10&search=phone&sort=-price
-router.get('/', isAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 9, search = '', sort = '-rating' } = req.query
     const query = search
@@ -43,7 +43,7 @@ router.get('/', isAuth, async (req, res) => {
 })
 
 // get a product
-router.get('/:productId', isAuth, async (req, res) => {
+router.get('/:productId', async (req, res) => {
   try {
     const productId = req.params.productId
     const product = await Product.findById(productId).populate('seller', '_id name profileImage')

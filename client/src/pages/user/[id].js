@@ -3,7 +3,7 @@ import Loader from '@/components/common/Loader'
 import { Email, Facebook, Instagram, Twitter } from '@/components/icons'
 import Layout from '@/components/layout'
 import { useAuth } from '@/hooks/useAuth'
-import { fetcher } from '@/utils/fetcher'
+import useFetcher from '@/utils/fetcher'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -24,31 +24,13 @@ const Profile = () => {
   const [status, setStatus] = useState('')
   const { user, isAuth } = useAuth()
   const router = useRouter()
-
-  // const fetchProfile = async (id) => {
-  //   try {
-  //     const res = await fetcher(`/api/users/${id}`)
-  //     console.log(res)
-  //     // setProfile(res)
-  //   } catch (error) {
-  // console.log(error)
-  // error?.message ? setStatus(error.message) : setStatus('Something went wrong! 😕')
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
-
+  const fetcher = useFetcher()
   const fetchProfile = async (id) => {
     if (isAuth) {
       try {
-        const res = await fetch(`http://localhost:5000/api/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${isAuth}`,
-          },
-        })
-        const data = await res.json()
-        console.log(data)
-        setProfile(data)
+        const res = await fetcher(`/api/users/${id}`, { token: isAuth })
+        console.log(res)
+        setProfile(res)
       } catch (error) {
         console.log(error)
         error?.message ? setStatus(error.message) : setStatus('Something went wrong! 😕')

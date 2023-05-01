@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { fetcher } from '../utils/fetcher'
+import useFetcher from '../utils/fetcher'
 import useToast from './useToast'
 
 // making custom hook to use context in each component
@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const toast = useToast()
+  const fetcher = useFetcher()
 
   useEffect(() => {
     refreshSession()
