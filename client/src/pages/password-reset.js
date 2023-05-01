@@ -6,7 +6,6 @@ import Input from '@/components/common/Input'
 import Link from '@/components/common/Link'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/router'
-import Meta from '@/components/layout/Meta'
 import Layout from '@/components/layout'
 
 const PasswordReset = () => {
@@ -61,7 +60,7 @@ const PasswordReset = () => {
           />
           <Button
             className={'mt-4 w-full'}
-            isLoading={isLoading}
+            loading={isLoading}
             loadingText={'Sending Password Reset Email...'}
             onClick={onFormSubmit}
           >

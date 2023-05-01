@@ -1,5 +1,5 @@
 const { sign } = require('jsonwebtoken')
-const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = require('./config')
+const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, REFRESH_TOKEN_LIFE } = require('./config')
 
 // signing the access token
 const createAccessToken = (id) => {
@@ -11,7 +11,7 @@ const createAccessToken = (id) => {
 // signing the refresh token
 const createRefreshToken = (id) => {
   return sign({ id }, REFRESH_TOKEN_SECRET, {
-    expiresIn: '30d',
+    expiresIn: REFRESH_TOKEN_LIFE,
   })
 }
 
@@ -30,6 +30,8 @@ const sendRefreshToken = (res, refreshToken) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // expires in 7 days
+    // domain: 'sell-easy.vercel.app',
+    // secure: true, // make sure to set this to true if your website is being served over HTTPS
   })
 }
 

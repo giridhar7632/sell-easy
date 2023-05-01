@@ -22,7 +22,7 @@ const {
 // register a user
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, phoneNumber, address } = req.body
+    const { name, email, password, phoneNumber, address, profileImage } = req.body
 
     const user = await User.findOne({ email: email })
     if (user)
@@ -38,6 +38,7 @@ router.post('/register', async (req, res) => {
       password: passwordHash,
       phoneNumber,
       address,
+      profileImage,
     })
 
     const saved = await newUser.save()
@@ -75,7 +76,7 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body
 
-    const user = await User.findOne({ email: email }).select('+refreshToken')
+    const user = await User.findOne({ email: email }).select(['+refreshToken', '+password'])
     if (!user)
       return res.status(404).json({
         message: "User doesn't exist! 😢",
@@ -144,7 +145,7 @@ router.post('/refresh_token', async (req, res) => {
         type: 'error',
       })
     }
-    const user = await User.findById(id).select('refreshToken')
+    const user = await User.findById(id).select('+refreshToken')
 
     if (!user)
       return res.status(404).json({
@@ -154,6 +155,7 @@ router.post('/refresh_token', async (req, res) => {
       })
 
     if (user.refreshToken !== refreshToken) {
+      console.log(user.refreshToken === refreshToken)
       return res.status(403).json({
         message: 'Invalid refresh token! 🤔',
         type: 'error',
@@ -164,8 +166,8 @@ router.post('/refresh_token', async (req, res) => {
 
     user.refreshToken = newRefreshToken
     await user.save()
-
-    sendRefreshToken(res, refreshToken)
+    console.log({ user })
+    sendRefreshToken(res, newRefreshToken)
     return res.json({
       message: 'Refreshed successfully! 🤗',
       type: 'success',

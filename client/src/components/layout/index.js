@@ -7,7 +7,7 @@ const Layout = ({ meta, children, ...props }) => {
   return (
     <div className="max-w-screen min-h-screen">
       <Meta {...meta} />
-      <div className="mx-auto flex min-h-screen w-[100%] max-w-screen-lg flex-col">
+      <div className="mx-auto flex min-h-screen w-[100%] max-w-screen-xl flex-col px-4 lg:px-6 xl:px-0">
         {/* <Sidebar /> */}
         <Navbar />
         <main className="flex-1 px-4 py-2 md:px-6" {...props}>

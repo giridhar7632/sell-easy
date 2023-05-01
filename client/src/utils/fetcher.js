@@ -1,10 +1,10 @@
-export async function fetcher(endpoint, { body, token, ...customConfig } = {}) {
+export async function fetcher(endpoint, { method, body, token, ...customConfig } = {}) {
   const headers = { 'content-type': 'application/json' }
   if (token) {
     headers.Authorization = `Bearer ${token}`
   }
   const config = {
-    method: body ? 'POST' : 'GET',
+    method: method ? method : body ? 'POST' : 'GET',
     credentials: 'include',
     mode: 'cors',
     ...customConfig,
@@ -34,5 +34,5 @@ export async function fetcher(endpoint, { body, token, ...customConfig } = {}) {
 }
 
 function logout() {
-  window.localStorage.removeItem(localStorageKey)
+  window.localStorage.removeItem('accessToken')
 }

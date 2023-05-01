@@ -19,7 +19,27 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     refreshSession()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    // Listen for changes to the local storage
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener('storage', handleStorageChange)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  function handleStorageChange(event) {
+    // Check if the access token has been removed from local storage
+    if (event.key === 'accessToken' && event.newValue === null) {
+      // Refresh the session
+      refreshSession()
+    }
+  }
 
   async function refreshSession() {
     setIsLoading(true)
@@ -29,7 +49,8 @@ export const AuthProvider = ({ children }) => {
       })
       console.log(res)
       setIsAuth(res.accessToken)
-      setUser((prev) => ({ ...prev, ...res.user }))
+      setUser(res.user)
+      localStorage.setItem('accessToken', res.accessToken)
       // toast.open(res)
     } catch (error) {
       console.log(error)
@@ -37,6 +58,7 @@ export const AuthProvider = ({ children }) => {
       //   ? toast.open({ message: error.message, type: 'error' })
       //   : toast.open({ message: 'Something went wrong! 😕', type: 'error' })
     }
+
     setIsLoading(false)
   }
 
@@ -59,7 +81,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await fetcher('/api/auth/login', { body })
       setIsAuth(res.accessToken)
-      setUser((prev) => ({ ...prev, ...res.user }))
+      console.log(res)
+      setUser(res.user)
       toast.open(res)
       router.push('/')
     } catch (error) {

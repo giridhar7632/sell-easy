@@ -1,13 +1,22 @@
-import CookToast from '@/components/CookToast'
-import Button from '@/components/common/Button'
-import { AnimatedNavLink } from '@/components/common/Link'
-import { ChevronRight } from '@/components/icons'
-import Footer from '@/components/layout/Footer'
-import Meta from '@/components/layout/Meta'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { AnimatedNavLink } from '@/components/common/Link'
+import { ChevronRight } from '@/components/icons'
+import Meta from '@/components/layout/Meta'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function Index() {
+  const { isAuth, isLoading } = useAuth()
+  const router = useRouter()
+  useEffect(() => {
+    if (!isLoading && isAuth) {
+      router.replace('/explore')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth, isLoading])
+
   return (
     <div
       className={
@@ -20,27 +29,17 @@ export default function Index() {
           <Image src={'/logo.png'} alt={'Sell easy'} width={112.63} height={44} />
         </Link>
         <div className="btn-group flex flex-row items-center gap-4">
-          <AnimatedNavLink href="#">Explore</AnimatedNavLink>
-          <AnimatedNavLink href="#">Buy</AnimatedNavLink>
-          <AnimatedNavLink href="#">Sell</AnimatedNavLink>
+          <AnimatedNavLink href="/explore">Explore</AnimatedNavLink>
+          <AnimatedNavLink href="/buy">Buy</AnimatedNavLink>
+          <AnimatedNavLink href="/sell">Sell</AnimatedNavLink>
           <Link href={'/login'}>
             <button className="flex flex-row items-center gap-2 rounded-full bg-black px-6 py-3  transition-all duration-300 hover:gap-3">
-              <span className="font-medium text-white">Login</span>
+              <span className="font-semibold text-white">Login</span>
               <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 110-12 6 6 0 010 12zm-1-5a1 1 0 112 0v2a1 1 0 11-2 0v-2z" />
               </svg>
             </button>
           </Link>
-          {/* <Link href={'/login'}>
-            <button className="flex flex-row items-center gap-2 rounded-full bg-black px-6 py-3 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-              <span className="font-medium text-white">Login</span>
-            </button>
-          </Link>
-          <Link href={'/register'}>
-            <button className="flex flex-row items-center gap-2 rounded-full bg-black px-6 py-3 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-              <span className="font-medium text-white">Signup</span>
-            </button>
-          </Link> */}
         </div>
       </nav>
       <main className="mx-auto flex max-w-screen-lg flex-1 items-center justify-center">
@@ -55,18 +54,17 @@ export default function Index() {
             </p>
             <div className={'flex items-center gap-6'}>
               <Link href={'/register'}>
-                <button className="flex flex-row items-center gap-2 rounded-full bg-black px-6 py-3 text-white transition-all duration-300 hover:gap-3">
-                  <span className="font-medium ">Get Started</span>
+                <button className="flex flex-row items-center gap-2 rounded-full bg-black px-6 py-3 font-semibold text-white transition-all duration-300 hover:gap-3">
+                  <span>Get Started</span>
                   <ChevronRight width={24} />
                 </button>
               </Link>
 
               <Link href={'/contact'}>
-                <button className="flex flex-row items-center gap-2 rounded-full bg-gray-200 px-6 py-3 text-gray-800 transition-all duration-300 hover:gap-3 hover:bg-gray-300">
-                  <span className="font-medium ">Contact</span>
+                <button className="rounded-full bg-teal-400/20 px-6 py-3 font-semibold text-teal-500 backdrop-blur-sm hover:text-teal-600">
+                  Contact
                 </button>
               </Link>
-              <CookToast />
             </div>
           </div>
         </div>

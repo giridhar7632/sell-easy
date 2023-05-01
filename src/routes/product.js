@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 // GET /products?page=1&limit=10&search=phone&sort=-price
 router.get('/', isAuth, async (req, res) => {
   try {
-    const { page = 1, limit = 10, search = '', sort = '-popularity' } = req.query
+    const { page = 1, limit = 9, search = '', sort = '-rating' } = req.query
     const query = search
       ? {
           $or: [
@@ -32,7 +32,7 @@ router.get('/', isAuth, async (req, res) => {
       page,
       limit,
       sort,
-      populate: [{ path: 'seller', select: '_id name profileImage', model: 'User' }, 'category'],
+      select: ['name', 'price', 'image', 'rating'],
     })
 
     res.status(200).json(paginatedProducts)

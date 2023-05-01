@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Button from '@/components/common/Button'
 import Loader from '@/components/common/Loader'
 import { useAuth } from '@/hooks/useAuth'
+import Layout from '@/components/layout'
 
 const VerifyEmail = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -22,17 +23,19 @@ const VerifyEmail = () => {
   }, [router.isReady])
 
   return (
-    <div className="flex h-[80%] w-full flex-col items-center justify-center">
-      {isLoading ? <Loader /> : <h1 className="text-clip text-3xl font-black">{status}</h1>}
-      <h3 className="my-4 text-xl">
-        {isLoading
-          ? 'Verifying your email...'
-          : 'Your email has been verified! You can now have the full access to the application'}
-      </h3>
-      <Link href={'/'} replace>
-        <Button>Go to Home</Button>
-      </Link>
-    </div>
+    <Layout meta={{ name: 'Email verification' }}>
+      <div className="flex h-[80%] w-full flex-col items-center justify-center">
+        {isLoading ? <Loader /> : <h1 className="text-clip text-3xl font-black">{status}</h1>}
+        <h3 className="my-4 text-xl">
+          {isLoading
+            ? 'Verifying your email...'
+            : 'Your email has been verified! You can now have the full access to the application'}
+        </h3>
+        <Link href={'/'} replace>
+          <Button>Go to Home</Button>
+        </Link>
+      </div>
+    </Layout>
   )
 }
 

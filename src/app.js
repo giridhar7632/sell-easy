@@ -26,6 +26,8 @@ app.use((req, res, next) => {
     'http://localhost:5000',
     'http://127.0.0.1:5000',
     'http://localhost:8080',
+    'https://sell-easy.vercel.app',
+    'https://sell-easy-giridhar7632.vercel.app',
   ]
   const origin = req.headers.origin
   if (allowedOrigins.includes(origin)) {

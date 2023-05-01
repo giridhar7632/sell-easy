@@ -46,7 +46,7 @@ router.get('/protected', isAuth, async (req, res) => {
 })
 
 // verify email
-router.post('/verify-email/:id/:token', async (req, res) => {
+router.get('/verify-email/:id/:token', async (req, res) => {
   try {
     const { id, token } = req.params
 

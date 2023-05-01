@@ -3,7 +3,7 @@ import Layout from '@/components/layout'
 const terms = () => {
   return (
     <Layout meta={{ name: 'Terms' }}>
-      <div class="prose mx-auto xl:prose-lg">
+      <div className="prose mx-auto xl:prose-lg">
         <h1>Terms &amp; Conditions</h1>
         <p>Updated at 25, Feb 2023</p>
         <h2>General Terms</h2>

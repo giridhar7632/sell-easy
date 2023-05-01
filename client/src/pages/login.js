@@ -6,7 +6,6 @@ import Button from '@/components/common/Button'
 import Input from '@/components/common/Input'
 import Link from '@/components/common/Link'
 import { useAuth } from '@/hooks/useAuth'
-import useToast from '@/hooks/useToast'
 import Layout from '@/components/layout'
 
 const Login = () => {
@@ -21,7 +20,7 @@ const Login = () => {
   const { isAuth, isLoading, login } = useAuth()
   useEffect(() => {
     if (!isLoading && isAuth) {
-      router.replace('/')
+      router.replace('/explore')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, isLoading])
@@ -32,7 +31,6 @@ const Login = () => {
     )
     return () => subscription.unsubscribe()
   }, [watch])
-  const toast = useToast()
   const onFormSubmit = handleSubmit(async (data) => {
     await login(data)
   })
@@ -42,11 +40,6 @@ const Login = () => {
       <div className="flex h-full w-full flex-col items-center justify-center">
         <form className="w-96 max-w-xl rounded-xl border bg-white p-12 text-base shadow-sm">
           <h1 className="mb-6 w-max text-clip text-2xl font-bold">Login</h1>
-          {/* {status ? (
-            <div className="mb-2 rounded-sm bg-red-50 p-2 text-center ring-2 ring-red-200">
-              {status}
-            </div>
-          ) : null} */}
           <Input
             label={'Email'}
             name={'email'}
@@ -84,7 +77,7 @@ const Login = () => {
           </Link>
           <Button
             className={'mt-2'}
-            isLoading={isLoading}
+            loading={isLoading}
             loadingText={'Logging in...'}
             onClick={onFormSubmit}
           >

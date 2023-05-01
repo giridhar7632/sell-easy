@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { useAuth } from '@/context/useAuth'
+import { useAuth } from '@/hooks/useAuth'
 import Loader from './common/Loader'
+import Meta from './layout/Meta'
+import { titleCase } from '@/utils/titleCase'
 
 const Protected = ({ protectedRoutes, children }) => {
   const router = useRouter()
+  const name = titleCase(router.pathname.slice(1))
   const { isAuth, isLoading } = useAuth()
 
   const pathIsProtected = protectedRoutes.indexOf(router.pathname) !== -1
 
   useEffect(() => {
-    console.log({ isLoading, isAuth, pathIsProtected })
     if (!isLoading && !isAuth && pathIsProtected) {
       // Redirect route, you can point this to /login
       router.push('/login')
@@ -20,7 +22,12 @@ const Protected = ({ protectedRoutes, children }) => {
   }, [isLoading, isAuth, pathIsProtected])
 
   if ((isLoading || !isAuth) && pathIsProtected) {
-    return <Loader />
+    return (
+      <>
+        <Meta meta={{ name }} />
+        <Loader />
+      </>
+    )
   }
 
   return children

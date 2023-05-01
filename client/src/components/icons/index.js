@@ -7,12 +7,20 @@ function GenerateIcon(data, props) {
   return React.createElement(data.tag, { ...data.attr, ...props }, children)
 }
 
+{
+  /* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg> */
+}
+
 export function Search(props) {
   return GenerateIcon(
     {
       tag: 'svg',
       attr: {
-        viewBox: '0 0 19 19',
+        viewBox: '0 0 24 24',
         fill: 'none',
         stroke: 'currentColor',
         strokeWidth: '2',
@@ -21,11 +29,10 @@ export function Search(props) {
       },
       child: [
         {
-          tag: 'path',
-          attr: {
-            d: 'M15.8723 14.8116C17.1996 13.2436 18 11.2153 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18C11.2153 18 13.2436 17.1996 14.8116 15.8723L17.4697 18.5303C17.7626 18.8232 18.2374 18.8232 18.5303 18.5303C18.8232 18.2374 18.8232 17.7626 18.5303 17.4697L15.8723 14.8116ZM16.5 9C16.5 13.1421 13.1421 16.5 9 16.5C4.85786 16.5 1.5 13.1421 1.5 9C1.5 4.85786 4.85786 1.5 9 1.5C13.1421 1.5 16.5 4.85786 16.5 9Z',
-          },
+          tag: 'circle',
+          attr: { cx: 10, cy: 10, r: 7 },
         },
+        { tag: 'line', attr: { x1: '18', y1: '18', x2: '15', y2: '15' } },
       ],
     },
     props
@@ -63,12 +70,12 @@ export function User(props) {
   )
 }
 
-export function Heart(props) {
+export function Logout(props) {
   return GenerateIcon(
     {
       tag: 'svg',
       attr: {
-        viewBox: '0 0 19 19',
+        viewBox: '0 0 24 24',
         fill: 'none',
         stroke: 'currentColor',
         strokeWidth: '2',
@@ -79,7 +86,92 @@ export function Heart(props) {
         {
           tag: 'path',
           attr: {
-            d: 'M8.42979 1.64279L8.42956 1.64302L7.8529 2.23725L7.49408 2.60699L7.13526 2.23725L6.5586 1.64302L6.55802 1.64243C5.25028 0.290396 3.15986 0.101071 1.77965 1.27714C0.164136 2.65613 0.0772588 5.13809 1.52457 6.63458L8.42979 1.64279ZM8.42979 1.64279C9.74072 0.290153 11.8283 0.101252 13.2084 1.27702C14.824 2.656 14.9109 5.138 13.4608 6.63448L13.4607 6.63458L7.79656 12.4831C7.62711 12.658 7.35812 12.658 7.18868 12.4831L1.52478 6.6348L8.42979 1.64279Z',
+            d: 'M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2',
+          },
+        },
+        {
+          tag: 'path',
+          attr: {
+            d: 'M7 12h14l-3 -3m0 6l3 -3',
+          },
+        },
+      ],
+    },
+    props
+  )
+}
+
+{
+  /* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-logout" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="" />
+  <path d="" />
+</svg> */
+}
+
+export function Cart(props) {
+  return GenerateIcon(
+    {
+      tag: 'svg',
+      attr: {
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+      },
+      child: [
+        {
+          tag: 'circle',
+          attr: { cx: 6, cy: 19, r: 2 },
+        },
+        {
+          tag: 'circle',
+          attr: { cx: 17, cy: 19, r: 2 },
+        },
+        {
+          tag: 'path',
+          attr: {
+            d: 'M17 17h-11v-14h-2',
+          },
+        },
+        {
+          tag: 'path',
+          attr: {
+            d: 'M6 5l14 1l-1 7h-13',
+          },
+        },
+      ],
+    },
+    props
+  )
+}
+
+{
+  /* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-heart" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+</svg> */
+}
+
+export function Heart(props) {
+  return GenerateIcon(
+    {
+      tag: 'svg',
+      attr: {
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+      },
+      child: [
+        {
+          tag: 'path',
+          attr: {
+            d: 'M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572',
           },
         },
       ],
@@ -193,6 +285,34 @@ export function Facebook(props) {
             d: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z',
           },
         },
+      ],
+    },
+    props
+  )
+}
+
+{
+  /* <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <rect x="3" y="5" width="18" height="14" rx="2" />
+  <polyline points="3 7 12 13 21 7" />
+</svg> */
+}
+export function Email(props) {
+  return GenerateIcon(
+    {
+      tag: 'svg',
+      attr: {
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+      },
+      child: [
+        { tag: 'rect', attr: { x: 3, y: 5, width: 18, height: 14, rx: 2 } },
+        { tag: 'polyline', attr: { points: '3 7 12 13 21 7' } },
       ],
     },
     props

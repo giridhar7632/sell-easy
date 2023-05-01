@@ -8,7 +8,6 @@ import Link from '@/components/common/Link'
 import Layout from '@/components/layout'
 import { useAuth } from '@/hooks/useAuth'
 import FormSection from '@/components/FormSection'
-import CookToast from '@/components/CookToast'
 
 const Register = () => {
   const {
@@ -34,7 +33,6 @@ const Register = () => {
   return (
     <Layout meta={{ name: 'Register' }}>
       <div className="mx-auto max-w-xl">
-        <CookToast />
         <h1 className="mb-6 w-max text-clip text-2xl font-bold">Register</h1>
         {/* {status ? (
           <div className="mb-2 rounded-sm bg-red-50 p-2 text-center ring-2 ring-red-200">
@@ -119,19 +117,28 @@ const Register = () => {
               name="Room no."
               type="text"
               placeholder="Room number (A 123)"
-              register={register('address.room')}
+              error={errors?.address?.room}
+              register={register('address.room', {
+                required: `Room no is required!`,
+              })}
             />
             <Input
               name="Hostel"
               type="text"
               placeholder="Hostel (H 8)"
-              register={register('address.hostel')}
+              error={errors?.address?.hostel}
+              register={register('address.hostel', {
+                required: `Hostel no is required!`,
+              })}
             />
             <Input
               name="Branch"
               type="text"
               placeholder="Branch (Electronics ...)"
-              register={register('address.branch')}
+              error={errors?.address?.branch}
+              register={register('address.branch', {
+                required: `Hostel no is required!`,
+              })}
             />
           </FormSection>
 

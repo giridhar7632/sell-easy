@@ -44,7 +44,7 @@ const ResetPassword = () => {
           />
           <Button
             className={'mt-4 w-full'}
-            isLoading={isLoading}
+            loading={isLoading}
             loadingText={'Updating Password...'}
             onClick={onFormSubmit}
             disabled={!router.isReady}

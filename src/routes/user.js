@@ -11,6 +11,7 @@ const User = require('../models/user')
 router.get('/me', isAuth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
+      .populate('wishlist')
       .populate({
         path: 'reviews',
         populate: {
@@ -75,16 +76,14 @@ router.put('/me', isAuth, async (req, res) => {
 // Get user profile details
 router.get('/:id', isAuth, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
-      .populate('wishlist')
-      .populate({
-        path: 'reviews',
-        populate: {
-          path: 'reviewer',
-          select: '_id name profileImage',
-          model: 'User',
-        },
-      })
+    const user = await User.findById(req.params.id).populate({
+      path: 'reviews',
+      populate: {
+        path: 'reviewer',
+        select: '_id name profileImage',
+        model: 'User',
+      },
+    })
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' })

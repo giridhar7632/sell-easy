@@ -4,8 +4,7 @@ const PORT = process.env.PORT || 5000
 
 const MONGO_URI =
   process.env.NODE_ENV === 'test' ? process.env.TEST_MONGO_URI : process.env.MONGO_URI
-const CLIENT_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_URL
+const CLIENT_URL = process.env.NEXT_PUBLIC_URL
 module.exports = {
   MONGO_URI,
   PORT,

@@ -3,7 +3,7 @@ import Layout from '@/components/layout'
 const privacyPolicy = () => {
   return (
     <Layout meta={{ name: 'Privacy Policy' }}>
-      <div class="prose mx-auto xl:prose-lg">
+      <div className="prose mx-auto xl:prose-lg">
         <h1>Privacy Policy</h1>
         <p>Updated at 25, Feb 2023</p>
         <p>
