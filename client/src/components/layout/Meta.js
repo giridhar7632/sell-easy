@@ -3,7 +3,7 @@ import Head from 'next/head'
 const Meta = ({
   title = 'Sell Easy',
   name = 'A place to easily sell or buy used goods',
-  description = 'A place to easily sell your used goods within the NIT campus.',
+  description = 'Sell easy - A place to easily sell your used goods within the NIT campus. Join now to get the best deals on pre-owned items.',
   url = 'https://sell-easy.vercel.app',
   image = '/og.png',
   children,
@@ -27,11 +27,11 @@ const Meta = ({
 
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-    <meta name="msapplication-TileColor" content="#ffc40d" />
+    <meta name="msapplication-TileColor" content="#00aba9" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" />
     {children}
   </Head>
 )
