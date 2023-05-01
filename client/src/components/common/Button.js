@@ -33,3 +33,14 @@ export default function Button({
     </button>
   )
 }
+
+export function IconButton({ children, ...props }) {
+  return (
+    <button
+      className="flex items-center justify-center rounded-full bg-teal-100 p-2 text-teal-500 ring-0 hover:text-teal-600 hover:ring hover:ring-teal-200 disabled:bg-teal-100 disabled:ring-0"
+      {...props}
+    >
+      {children}
+    </button>
+  )
+}

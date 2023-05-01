@@ -3,6 +3,7 @@ import { Search } from '@/components/icons'
 import Layout from '@/components/layout'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { products } from 'data'
 
 const Buy = ({ currentPage, next, previous, error, totalPages, data }) => {
   const router = useRouter()
@@ -46,7 +47,7 @@ const Buy = ({ currentPage, next, previous, error, totalPages, data }) => {
             <h1 className="my-4 text-clip text-lg font-bold md:text-3xl">
               Discover the products you want to buy!
             </h1>
-            <div className="flex w-full max-w-[90%] items-center gap-2 rounded-full border border-gray-200 px-4 py-2 shadow-sm lg:max-w-[50%]">
+            <div className="flex w-full items-center gap-2 rounded-full border border-gray-200 px-4 py-2 shadow-sm md:max-w-[90%] lg:max-w-[50%]">
               <Search className={'text-gray-300'} width={24} />
               <input
                 value={search}
@@ -57,8 +58,8 @@ const Buy = ({ currentPage, next, previous, error, totalPages, data }) => {
               ></input>
             </div>
           </div>
-          <div className="container flex w-full">
-            <div className="w-[30%]">
+          <div className="container my-4 flex w-full md:my-8">
+            <div className="w-[25%] hidden md:block">
               <h2 className="text-lg font-semibold">Sort by:</h2>
               <input type="radio" />
               Popularity
@@ -87,14 +88,12 @@ export default Buy
 
 export async function getStaticProps() {
   try {
-    const res = await fetch('http://localhost:5000/api/products')
-    const data = await res.json()
-
-    console.log({ data })
+    // const res = await fetch('http://localhost:5000/api/products')
+    // const data = await res.json()
 
     return {
       props: {
-        ...data,
+        data: products,
       },
       revalidate: 60 * 60, // revalidate every hour
     }
