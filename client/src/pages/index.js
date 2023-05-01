@@ -24,7 +24,7 @@ export default function Index() {
       }
     >
       <Meta />
-      <nav className="z-10 mx-auto flex w-full max-w-screen-lg items-center justify-between py-4">
+      <nav className="z-10 mx-auto flex w-full max-w-screen-lg items-center justify-between px-4 py-4 lg:px-0">
         <Link className="text-lg" href={'/'}>
           <Image src={'/logo.png'} alt={'Sell easy'} width={112.63} height={44} />
         </Link>
@@ -42,7 +42,7 @@ export default function Index() {
           </Link>
         </div>
       </nav>
-      <main className="mx-auto flex max-w-screen-lg flex-1 items-center justify-center">
+      <main className="mx-auto flex max-w-screen-lg flex-1 items-center justify-center px-4 lg:px-0">
         <div>
           <div className="mx-auto">
             <h1 className="mb-6 text-6xl font-semibold tracking-tight">
@@ -68,7 +68,7 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className={'w-[80%]'}>
+        <div className={'hidden w-[80%] md:block'}>
           <Image height={300} width={300} src={'/logo.png'} alt={'sell easy'} />
         </div>
       </main>

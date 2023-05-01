@@ -6,12 +6,13 @@ const { isAuth } = require('../utils/isAuth')
 const getPaginatedData = require('../utils/pagination')
 const Review = require('../models/review')
 const mongoose = require('mongoose')
+const Category = require('../models/category')
 
 // get all products
 // GET /products?page=1&limit=10&search=phone&sort=-price
 router.get('/', async (req, res) => {
   try {
-    const { page = 1, limit = 9, search = '', sort = '-rating' } = req.query
+    const { page = 1, limit = 9, search = '', sort = '-rating', categoryId = null } = req.query
     const query = search
       ? {
           $or: [
@@ -27,6 +28,9 @@ router.get('/', async (req, res) => {
           ],
         }
       : {}
+    if (categoryId) {
+      query.category = categoryId
+    }
     const paginatedProducts = await getPaginatedData(Product, {
       filters: query,
       page,

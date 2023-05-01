@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
   try {
     const categories = await Category.find()
 
-    res.status(200).json({ categories })
+    res.status(200).json(categories)
   } catch (error) {
     logger.error(error)
     res.status(500).json({ message: 'Something went wrong! 😕', type: 'error', error })

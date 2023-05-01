@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
-import useFetcher from '../utils/fetcher'
+import useFetcher from './useFetcher'
 import useToast from './useToast'
 
 // making custom hook to use context in each component

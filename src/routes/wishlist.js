@@ -2,11 +2,16 @@ const express = require('express')
 const router = express.Router()
 const Wishlist = require('../models/wishlist')
 const { isAuth } = require('../utils/isAuth')
+const logger = require('../utils/logger')
 
 // Get all wishlists of a user
 router.get('/', isAuth, async (req, res) => {
   try {
-    const wishlists = await Wishlist.find({ user: req.user._id }).populate('products')
+    const wishlists = await Wishlist.find({ user: req.user._id }).populate({
+      path: 'products',
+      select: '_id name image price',
+      model: 'Product',
+    })
     res.json(wishlists)
   } catch (error) {
     logger.error(error)
@@ -25,6 +30,10 @@ router.post('/', isAuth, async (req, res) => {
       user: req.user._id,
       name: name,
       description: description,
+    }).populate({
+      path: 'products',
+      select: '_id name image price',
+      model: 'Product',
     })
     const savedWishlist = await wishlist.save()
     res.json(savedWishlist)
@@ -43,6 +52,10 @@ router.post('/:id/products', isAuth, async (req, res) => {
     const wishlist = await Wishlist.findOne({
       _id: req.params.id,
       user: req.user._id,
+    }).populate({
+      path: 'products',
+      select: '_id name image price',
+      model: 'Product',
     })
     if (!wishlist) {
       return res.status(404).json({
@@ -68,6 +81,10 @@ router.delete('/:id/products/:productId', isAuth, async (req, res) => {
     const wishlist = await Wishlist.findOne({
       _id: req.params.id,
       user: req.user._id,
+    }).populate({
+      path: 'products',
+      select: '_id name image price',
+      model: 'Product',
     })
     if (!wishlist) {
       return res.status(404).json({

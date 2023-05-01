@@ -5,7 +5,7 @@ import Button from '../common/Button'
 import { Cart, Heart } from '../icons'
 import Avatar from '../Profile/Avatar'
 
-const Navbar = () => {
+const Navbar = ({ toggleWishlist }) => {
   const { isAuth, logout, user } = useAuth()
 
   // useEffect(() => {
@@ -37,7 +37,7 @@ const Navbar = () => {
               Your Cart
               <Cart width={18} height={18} />
             </Button>
-            <Button variant="secondary">
+            <Button variant="secondary" onClick={toggleWishlist}>
               Wishlist
               <Heart width={18} height={18} />
             </Button>
