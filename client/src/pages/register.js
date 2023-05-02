@@ -20,7 +20,7 @@ const Register = () => {
 
   useEffect(() => {
     if (isAuth) {
-      router.replace('/')
+      router.replace('/explore')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth])

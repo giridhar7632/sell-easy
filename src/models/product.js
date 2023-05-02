@@ -6,9 +6,17 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
+    // category: {
+    //   type: String,
+    //   required: true,
+    // },
+    condition: {
       type: String,
       required: true,
+    },
+    status: {
+      type: ['sale', 'sold'],
+      default: 'sale',
     },
     description: {
       type: String,

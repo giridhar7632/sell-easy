@@ -50,7 +50,9 @@ router.get('/', async (req, res) => {
 router.get('/:productId', async (req, res) => {
   try {
     const productId = req.params.productId
-    const product = await Product.findById(productId).populate('seller', '_id name profileImage')
+    const product = await Product.findById(productId)
+      .populate('seller', '_id name profileImage')
+      .populate('category', '_id, name')
 
     if (!product) {
       return res.status(404).json({
@@ -126,10 +128,19 @@ router.get('/:productId/reviews', async (req, res) => {
 // add a product
 router.post('/', isAuth, async (req, res) => {
   try {
-    const { name, description, price, category, seller, image, media } = req.body
+    const { name, description, price, category, condition, seller, image, media } = req.body
 
     // Create a new product document using the product schema
-    const newProduct = new Product({ name, description, price, category, seller, image, media })
+    const newProduct = new Product({
+      name,
+      description,
+      condition,
+      price,
+      category,
+      seller,
+      image,
+      media,
+    })
 
     // Save the new product document to the database
     await newProduct.save()

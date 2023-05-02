@@ -4,14 +4,26 @@ import { IconButton } from '../common/Button'
 import clsx from 'clsx'
 import { useWishlist } from '@/hooks/useWishlist'
 import { useState } from 'react'
+import Link from 'next/link'
 
 const ProductCard = ({ product }) => {
   const { addProductToWishlist, removeProductFromWishlist, isProductInWishlist } = useWishlist()
   const [wishlisted, setWishlisted] = useState(isProductInWishlist(product._id))
   return (
-    <div className="w-[100%] cursor-pointer overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-sm md:w-[48%] lg:w-[32%]">
-      <div className="relative h-72 w-full">
-        <Image src={product.image} alt={product.name} fill className="object-cover object-center" />
+    <Link
+      href={`/product/${product._id}`}
+      className="group w-[100%] cursor-pointer overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-sm md:w-[48%] lg:w-[32%]"
+    >
+      {/* <div> */}
+      <div className="relative h-72 w-full overflow-hidden">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-cover object-center transition-all duration-500 ease-in-out group-hover:scale-110"
+          placeholder={'blur'}
+          blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+        />
         <button
           className={clsx(
             'z-11 absolute top-2 right-2 rounded-full border-0 bg-white p-2 shadow outline-0 hover:bg-gray-100',
@@ -30,12 +42,13 @@ const ProductCard = ({ product }) => {
         <p className="text-xs font-semibold text-gray-400">Price</p>
         <div className="flex items-center justify-between">
           <p className="text-lg font-medium">₹ {product.price}</p>
-          <IconButton onClick={() => console.log(product.name)}>
+          {/* <IconButton onClick={() => console.log(product.name)}>
             <AddToCart width={24} height={24} />
-          </IconButton>
+          </IconButton> */}
         </div>
       </div>
-    </div>
+      {/* </div> */}
+    </Link>
   )
 }
 
