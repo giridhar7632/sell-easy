@@ -1,7 +1,7 @@
 import Link from '../common/Link'
 
 const Footer = () => (
-  <footer className="relative my-2 mx-4 flex flex-wrap items-center justify-between rounded-lg bg-white bg-opacity-10 p-4 shadow-sm backdrop-blur-sm">
+  <footer className="relative my-2 flex flex-wrap items-center justify-between rounded-lg bg-white bg-opacity-10 p-4 shadow-sm backdrop-blur-sm">
     <div>
       &copy; 2023
       <Link
@@ -16,10 +16,10 @@ const Footer = () => (
     <ul className="flex items-center gap-4">
       <Link href={'/about'}>About</Link>
       <Link href={'/policy'} rel={'noreferrer noopener'} target={'_blank'}>
-        Privacy Policy
+        Policy
       </Link>
       <Link href={'/terms'} rel={'noreferrer noopener'} target={'_blank'}>
-        Terms & Conditions
+        Terms
       </Link>
     </ul>
   </footer>
