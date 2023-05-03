@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Button from '../common/Button'
 import Image from 'next/image'
+import clsx from 'clsx'
 
-const ImageUpload = ({ defaultValue, setValue, key = 'image' }) => {
+const ImageUpload = ({ defaultValue, setValue, name = 'image' }) => {
   const [imageSrc, setImageSrc] = useState(defaultValue)
   const [loading, setLoading] = useState(false)
   const [uploadData, setUploadData] = useState()
@@ -34,7 +35,7 @@ const ImageUpload = ({ defaultValue, setValue, key = 'image' }) => {
       })
       const data = await res.json()
       setImageSrc(data.secure_url)
-      setValue(key, data.secure_url)
+      setValue(name, data.secure_url)
       setUploadData(data)
     } catch (error) {
       console.log(error)
@@ -54,8 +55,11 @@ const ImageUpload = ({ defaultValue, setValue, key = 'image' }) => {
         {imageSrc && (
           <Image
             width={426}
-            height={240}
-            className="mb-2 aspect-video w-full rounded"
+            height={name === 'profileImage' ? 426 : 240}
+            className={clsx(
+              'mb-2 w-full rounded',
+              name === 'profileImage' ? 'aspect-square' : 'aspect-video'
+            )}
             src={imageSrc}
             alt=""
           />

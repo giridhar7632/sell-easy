@@ -69,7 +69,6 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
             label="Price"
             placeholder="36.5"
             type="number"
-            multiline
             error={errors?.price}
             register={register('price', {
               required: {

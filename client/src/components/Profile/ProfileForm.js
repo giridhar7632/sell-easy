@@ -5,12 +5,13 @@ import Input from '@/components/common/Input'
 import FormSection from '@/components/FormSection'
 import ImageUpload from '../ProductForm/ImageUpload'
 
-export function ProfileForm({ onFormSubmit, defaultValues, type = 'Create' }) {
+export function ProfileForm({ onFormSubmit, defaultValues, type = 'Create', ...props }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -34,84 +35,86 @@ export function ProfileForm({ onFormSubmit, defaultValues, type = 'Create' }) {
   const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true)
     await onFormSubmit(data)
+    reset()
     setIsLoading(false)
   })
 
   return (
-    <form>
-      <FormSection defaultOpen={true} title={'Credentials'}>
-        <Input
-          label="Nick Name"
-          name="name"
-          type="text"
-          placeholder="Space mozarat"
-          aria-label="username"
-          autoComplete="current-name"
-          autoFocus
-          register={register('name', {
-            minLength: {
-              value: 3,
-              message: `Your nick name must be at least 3 characters!`,
-            },
-          })}
-          error={errors?.name}
-        />
-        <Input
-          label={'Email'}
-          name={'email'}
-          type="email"
-          required
-          disabled={type === 'Update'}
-          placeholder="your@email.com"
-          aria-label="user-email"
-          autoComplete="current-email"
-          register={register('email', {
-            required: `Email is required!`,
-            pattern: {
-              value:
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              message: 'Invalid email address!',
-            },
-          })}
-          error={errors?.email}
-        />
-        <Input
-          label={'Phone number'}
-          name={'phone'}
-          type="email"
-          required
-          placeholder="+91 1234567890"
-          aria-label="user-phone"
-          autoComplete="current-email"
-          register={register('phoneNumber', {
-            required: `Phone number is required!`,
-          })}
-          error={errors?.phoneNumber}
-        />
-        {!(type === 'Update') && (
+    <div {...props} className="flex flex-col">
+      <form>
+        <FormSection defaultOpen={true} title={'Credentials'}>
           <Input
-            label={'Password'}
-            type="password"
-            name="password"
-            placeholder={`Super secret ✨ - minimum 8 characters`}
-            aria-label="user-password"
-            register={register('password', {
-              required: `Password is required!`,
-              pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                message:
-                  'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
-              },
+            label="Nick Name"
+            name="name"
+            type="text"
+            placeholder="Space mozarat"
+            aria-label="username"
+            autoComplete="current-name"
+            autoFocus
+            register={register('name', {
               minLength: {
-                value: 8,
-                message: 'Password should be atleast 8 characters long!',
+                value: 3,
+                message: `Your nick name must be at least 3 characters!`,
               },
             })}
-            error={errors?.password}
+            error={errors?.name}
           />
-        )}
-      </FormSection>
-
+          <Input
+            label={'Email'}
+            name={'email'}
+            type="email"
+            required
+            disabled={type === 'Update'}
+            placeholder="your@email.com"
+            aria-label="user-email"
+            autoComplete="current-email"
+            register={register('email', {
+              required: `Email is required!`,
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Invalid email address!',
+              },
+            })}
+            error={errors?.email}
+          />
+          <Input
+            label={'Phone number'}
+            name={'phone'}
+            type="email"
+            required
+            placeholder="+91 1234567890"
+            aria-label="user-phone"
+            autoComplete="current-email"
+            register={register('phoneNumber', {
+              required: `Phone number is required!`,
+            })}
+            error={errors?.phoneNumber}
+          />
+          {!(type === 'Update') && (
+            <Input
+              label={'Password'}
+              type="password"
+              name="password"
+              placeholder={`Super secret ✨ - minimum 8 characters`}
+              aria-label="user-password"
+              register={register('password', {
+                required: `Password is required!`,
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  message:
+                    'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
+                },
+                minLength: {
+                  value: 8,
+                  message: 'Password should be atleast 8 characters long!',
+                },
+              })}
+              error={errors?.password}
+            />
+          )}
+        </FormSection>
+      </form>
       {/* Address */}
       <FormSection title={'Address'}>
         <p className="text-xs text-gray-600">Enter your address</p>
@@ -171,7 +174,7 @@ export function ProfileForm({ onFormSubmit, defaultValues, type = 'Create' }) {
       <FormSection title={'Profile Image'}>
         <ImageUpload
           defaultValue={defaultValues?.profileImage}
-          key={'profileImage'}
+          name={'profileImage'}
           setValue={setValue}
         />
       </FormSection>
@@ -181,10 +184,10 @@ export function ProfileForm({ onFormSubmit, defaultValues, type = 'Create' }) {
         className={'mt-4'}
         onClick={onSubmit}
         loading={isLoading}
-        loadingText={type ? `${type}ing your profile...` : 'Submitting...'}
+        loadingText={type ? `${type.slice(0, -1)}ing your profile...` : 'Submitting...'}
       >
         {type ? `${type} my profile` : 'Submit'}
       </Button>
-    </form>
+    </div>
   )
 }

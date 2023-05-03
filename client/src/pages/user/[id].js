@@ -1,3 +1,9 @@
+import clsx from 'clsx'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import CommentsList from '@/components/Profile/CommentsList'
 import ProductsList from '@/components/Profile/ProductList'
 import { ProfileForm } from '@/components/Profile/ProfileForm'
 import ReviewList from '@/components/Reviews/ReviewList'
@@ -7,11 +13,7 @@ import Layout from '@/components/layout'
 import { useAuth } from '@/hooks/useAuth'
 import useFetcher from '@/hooks/useFetcher'
 import { Tab } from '@headlessui/react'
-import clsx from 'clsx'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import useToast from '@/hooks/useToast'
 
 const IconBtn = ({ children, ...props }) => (
   <Link
@@ -27,6 +29,7 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [status, setStatus] = useState('')
   const { user, isAuth } = useAuth()
+  const toast = useToast()
   const router = useRouter()
   const fetcher = useFetcher()
   const fetchProfile = async (id) => {
@@ -43,7 +46,18 @@ const Profile = () => {
     setIsLoading(false)
   }
 
-  console.log({ profile })
+  const onFormSubmit = async (data) => {
+    try {
+      const res = await fetcher(`/api/users/me`, { token: isAuth, method: 'PUT', body: data })
+      toast.open({ message: res.message, type: 'success' })
+      setProfile(res.user)
+    } catch (error) {
+      console.log(error)
+      error?.message
+        ? toast.open(error)
+        : toast.open({ message: 'Something went wrong! 😕', type: 'error' })
+    }
+  }
 
   useEffect(() => {
     if (router.isReady) {
@@ -61,12 +75,14 @@ const Profile = () => {
   }, [router.query.id])
 
   const tabs = {
-    Reviews: <ReviewList reviews={profile?.reviews || []} />,
+    Reviews: <ReviewList reviews={profile?.reviews || []} userId={profile?._id} />,
     Products: <ProductsList token={isAuth} userId={profile?._id} />,
     ...(router.query.id === 'me'
       ? {
-          Comments: 'comments',
-          'Edit Profile': <ProfileForm type={'Update'} defaultValues={user} />,
+          Comments: <CommentsList token={isAuth} />,
+          'Edit Profile': (
+            <ProfileForm type={'Update'} onFormSubmit={onFormSubmit} defaultValues={user} />
+          ),
         }
       : {}),
   }
@@ -93,26 +109,24 @@ const Profile = () => {
             <h1 className="text-xl font-bold">{profile?.name}</h1>
           </div>
 
-          <div className="my-4 mx-auto flex max-w-xs items-center justify-around">
+          <div className="my-4 mx-auto flex max-w-xs items-center justify-around gap-3">
             <IconBtn href={profile?.email}>
               <Email width={24} />
             </IconBtn>
             {profile?.socials && (
               <>
-                <IconBtn href={profile?.socials.twitter}>
+                <IconBtn href={profile?.socials.twitter} target={'_blank'}>
                   <Twitter width={24} />
                 </IconBtn>
-                <IconBtn href={profile?.socials.instagram}>
+                <IconBtn href={profile?.socials.instagram} target={'_blank'}>
                   <Instagram width={24} />
                 </IconBtn>
-                <IconBtn href={profile?.socials.facebook}>
+                <IconBtn href={profile?.socials.facebook} target={'_blank'}>
                   <Facebook width={24} />
                 </IconBtn>
               </>
             )}
           </div>
-
-          {/* <TabNavigation /> */}
 
           <Tab.Group as={'div'} className="w-full max-w-3xl  px-2 sm:px-0">
             <Tab.List className="flex space-x-1 rounded-xl border border-gray-200 p-1">
@@ -130,30 +144,6 @@ const Profile = () => {
                   {tab}
                 </Tab>
               ))}
-              {/* <Tab
-                key={'reviews'}
-                className={({ selected }) =>
-                  clsx(
-                    'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
-                    'text-teal-500 ring-teal-200 focus:outline-none focus:ring-2',
-                    selected && 'bg-teal-100 text-teal-600'
-                  )
-                }
-              >
-                Reviews
-              </Tab>
-              <Tab
-                key={'comments'}
-                className={({ selected }) =>
-                  clsx(
-                    'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
-                    'text-teal-500 ring-teal-200 focus:outline-none focus:ring-2',
-                    selected && 'bg-teal-100 text-teal-600'
-                  )
-                }
-              >
-                Comments
-              </Tab> */}
             </Tab.List>
             <Tab.Panels className={'mt-2'}>
               {Object.values(tabs).map((tab, idx) => (
@@ -164,18 +154,6 @@ const Profile = () => {
                   {tab}
                 </Tab.Panel>
               ))}
-              {/* <Tab.Panel
-                key={'reviews'}
-                className={clsx('rounded-xl bg-white p-3', 'focus:outline-none')}
-              >
-                reviews
-              </Tab.Panel>
-              <Tab.Panel
-                key={'comments'}
-                className={clsx('rounded-xl bg-white p-3', 'focus:outline-none')}
-              >
-                Comments
-              </Tab.Panel> */}
             </Tab.Panels>
           </Tab.Group>
         </div>

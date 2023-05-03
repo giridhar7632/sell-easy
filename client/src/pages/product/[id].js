@@ -156,7 +156,7 @@ const Product = ({ product, error, message, type }) => {
 export default Product
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://localhost:5000/api/products/${params.id}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${params.id}`)
   const data = await res.json()
   try {
     return {
@@ -174,7 +174,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`http://localhost:5000/api/products`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
   const data = await res.json()
   return {
     paths: data.data.map((item) => ({

@@ -153,6 +153,7 @@ router.post('/', isAuth, async (req, res) => {
 
     res.status(201).json({
       message: 'Review added successfully! 👍',
+      type: 'success',
       review: savedReview,
     })
   } catch (error) {

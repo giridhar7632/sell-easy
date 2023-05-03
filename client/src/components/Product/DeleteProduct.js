@@ -30,12 +30,7 @@ const DeleteProduct = ({ productId, ...props }) => {
 
   return (
     <>
-      <Button
-        className={'bg-red-500 ring-red-100 hover:bg-red-600'}
-        onClick={handleOpen}
-        type="button"
-        {...props}
-      >
+      <Button variant={'danger'} onClick={handleOpen} type="button" {...props}>
         Delete
       </Button>
       <Transition appear show={isOpen} as={Fragment}>
