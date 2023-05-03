@@ -7,7 +7,7 @@ import '@/styles/globals.css'
 
 export default function MyApp({ Component, pageProps }) {
   const getLayout = Component.getLayout ?? ((page) => page)
-  const protectedRoutes = ['/explore', '/user/[id]']
+  const protectedRoutes = ['/explore', '/user/[id]', '/sell', '/product[id]']
   // const protectedRoutes = []
 
   return (
