@@ -21,6 +21,7 @@ const Input = ({
           'form-control block w-full border border-solid bg-white bg-clip-padding px-4 py-2 font-normal text-gray-700 focus:ring-2',
           'm-0 rounded-md transition ease-in-out focus:border-teal-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:ring-teal-100',
           error ? 'border-red-300 ring ring-red-300' : 'border-gray-300',
+          props.disabled && 'cursor-not-allowed opacity-70',
           className,
         ])}
         name={name}

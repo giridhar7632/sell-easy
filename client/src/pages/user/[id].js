@@ -1,9 +1,11 @@
-import Button from '@/components/common/Button'
+import { ProfileForm } from '@/components/Profile/ProfileForm'
 import Loader from '@/components/common/Loader'
 import { Email, Facebook, Instagram, Twitter } from '@/components/icons'
 import Layout from '@/components/layout'
 import { useAuth } from '@/hooks/useAuth'
 import useFetcher from '@/hooks/useFetcher'
+import { Tab } from '@headlessui/react'
+import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -29,7 +31,6 @@ const Profile = () => {
     if (isAuth) {
       try {
         const res = await fetcher(`/api/users/${id}`, { token: isAuth })
-        console.log(res)
         setProfile(res)
       } catch (error) {
         console.log(error)
@@ -39,6 +40,8 @@ const Profile = () => {
 
     setIsLoading(false)
   }
+
+  console.log({ profile })
 
   useEffect(() => {
     if (router.isReady) {
@@ -54,6 +57,17 @@ const Profile = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.id])
+
+  const tabs = {
+    Reviews: 'review',
+    Products: 'products',
+    ...(router.query.id === 'me'
+      ? {
+          Comments: 'comments',
+          'Edit Profile': <ProfileForm type={'Update'} defaultValues={user} />,
+        }
+      : {}),
+  }
 
   return (
     <Layout meta={{ name: profile?.name || 'Profile' }}>
@@ -96,27 +110,72 @@ const Profile = () => {
             )}
           </div>
 
-          {/* <div className="flex flex-col">
-          <h2 className="mb-2 text-gray-500">Links</h2>
-          {links.length < 10 && user === profile?.id ? (
-            <LinkForm className={'mb-2 w-full'} title={'Add Link'} onFormSubmit={handleAddLink}>
-              + Add Link
-            </LinkForm>
-          ) : (
-            ''
-          )}
-          <ul>
-            {links.map((i, idx) => (
-              <ProfileLink
-                key={idx}
-                setLinks={setLinks}
-                own={user === profile?.id}
-                token={isAuth}
-                {...i}
-              />
-            ))}
-          </ul>
-        </div> */}
+          {/* <TabNavigation /> */}
+
+          <Tab.Group as={'div'} className="w-full max-w-3xl  px-2 sm:px-0">
+            <Tab.List className="flex space-x-1 rounded-xl border border-gray-200 p-1">
+              {Object.keys(tabs).map((tab, idx) => (
+                <Tab
+                  key={idx}
+                  className={({ selected }) =>
+                    clsx(
+                      'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                      'text-teal-500 ring-teal-200 focus:outline-none focus:ring-2',
+                      selected && 'bg-teal-100 text-teal-600'
+                    )
+                  }
+                >
+                  {tab}
+                </Tab>
+              ))}
+              {/* <Tab
+                key={'reviews'}
+                className={({ selected }) =>
+                  clsx(
+                    'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                    'text-teal-500 ring-teal-200 focus:outline-none focus:ring-2',
+                    selected && 'bg-teal-100 text-teal-600'
+                  )
+                }
+              >
+                Reviews
+              </Tab>
+              <Tab
+                key={'comments'}
+                className={({ selected }) =>
+                  clsx(
+                    'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                    'text-teal-500 ring-teal-200 focus:outline-none focus:ring-2',
+                    selected && 'bg-teal-100 text-teal-600'
+                  )
+                }
+              >
+                Comments
+              </Tab> */}
+            </Tab.List>
+            <Tab.Panels className={'mt-2'}>
+              {Object.values(tabs).map((tab, idx) => (
+                <Tab.Panel
+                  key={idx}
+                  className={clsx('rounded-xl bg-white p-3', 'focus:outline-none')}
+                >
+                  {tab}
+                </Tab.Panel>
+              ))}
+              {/* <Tab.Panel
+                key={'reviews'}
+                className={clsx('rounded-xl bg-white p-3', 'focus:outline-none')}
+              >
+                reviews
+              </Tab.Panel>
+              <Tab.Panel
+                key={'comments'}
+                className={clsx('rounded-xl bg-white p-3', 'focus:outline-none')}
+              >
+                Comments
+              </Tab.Panel> */}
+            </Tab.Panels>
+          </Tab.Group>
         </div>
       )}
     </Layout>

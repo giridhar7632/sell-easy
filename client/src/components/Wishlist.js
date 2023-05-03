@@ -7,7 +7,6 @@ import { Trash } from './icons'
 
 const WishlistSidebar = ({ open, toggle }) => {
   const { wishlist, removeProductFromWishlist, isLoading, status } = useWishlist()
-  console.log({ wishlist, isLoading, status })
 
   return (
     <Drawer open={open} title={'Wishlist'} toggle={toggle}>

@@ -48,7 +48,6 @@ export const AuthProvider = ({ children }) => {
       const res = await fetcher('/api/auth/refresh_token', {
         method: 'POST',
       })
-      console.log(res)
       setIsAuth(res.accessToken)
       setUser(res.user)
       localStorage.setItem('accessToken', res.accessToken)
@@ -82,7 +81,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await fetcher('/api/auth/login', { body })
       setIsAuth(res.accessToken)
-      console.log(res)
       setUser(res.user)
       toast.open(res)
       router.push('/')

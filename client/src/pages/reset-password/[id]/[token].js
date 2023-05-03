@@ -17,7 +17,6 @@ const ResetPassword = () => {
   const { isLoading, resetPassword } = useAuth()
 
   const onFormSubmit = handleSubmit(async (data) => {
-    console.log(router.query)
     await resetPassword(router.query, data)
   })
 

@@ -22,7 +22,6 @@ export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([])
   // const [loaded, setLoaded] = useState(false)
   const open = ({ type, message }) => {
-    console.log({ type, message })
     setToasts((prevToasts) => [...prevToasts, { id: generateUEID(), type, message }])
   }
   const close = (id) => setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id))

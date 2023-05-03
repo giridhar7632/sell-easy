@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { useAuth } from '../../hooks/useAuth'
 import Button from '../common/Button'
 import { Cart, Heart } from '../icons'
-import Avatar from '../Profile/Avatar'
 import { AnimatedNavLink } from '../common/Link'
+import ProfileMenu from '../Profile/ProfileMenu'
 
 const Navbar = ({ toggleWishlist }) => {
   const { isAuth, logout, user } = useAuth()
@@ -44,7 +44,7 @@ const Navbar = ({ toggleWishlist }) => {
               Wishlist
               <Heart width={18} height={18} />
             </Button>
-            <Avatar logout={logout} {...user} />
+            <ProfileMenu logout={logout} {...user} />
           </div>
         )}
       </div>

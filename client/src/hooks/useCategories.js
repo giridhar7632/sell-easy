@@ -23,7 +23,6 @@ export const CategoryProvider = ({ children }) => {
     setLoading(true)
     try {
       const response = await fetcher('/api/categories')
-      console.log({ response })
       setCategories(response)
     } catch (error) {
       setError(error)

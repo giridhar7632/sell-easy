@@ -28,9 +28,6 @@ const Product = ({ product, error, message, type }) => {
       : addProductToWishlist(currentProduct._id)
   }
 
-  // const { user, isAuth } = useAuth()
-  console.log({ product })
-
   if (error || type === 'error')
     return (
       <Layout meta={{ name: 'Product' }}>

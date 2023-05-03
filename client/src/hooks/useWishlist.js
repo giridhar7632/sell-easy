@@ -22,15 +22,11 @@ export const WishlistProvider = ({ children }) => {
   const fetcher = useFetcher()
   const toast = useToast()
 
-  const toggleWishlist = () => {
-    console.log('toggled', wishlistOpen)
-    setWishlistOpen(!wishlistOpen)
-  }
+  const toggleWishlist = () => setWishlistOpen(!wishlistOpen)
 
   const getWishlist = async () => {
     try {
       const res = await fetcher(`/api/wishlist`, { method: 'GET', token: isAuth })
-      console.log(res)
       if (res.length) {
         setWishlist(res[0])
       } else {

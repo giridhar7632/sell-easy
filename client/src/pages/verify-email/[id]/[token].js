@@ -13,7 +13,6 @@ const VerifyEmail = () => {
   const { verifyEmail } = useAuth()
   useEffect(() => {
     if (router.isReady) {
-      console.log({ query: router.query })
       verifyEmail(router.query).then((msg) => {
         setIsLoading(false)
         setStatus(msg)

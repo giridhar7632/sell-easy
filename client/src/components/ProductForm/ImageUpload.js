@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Button from '../common/Button'
 import Image from 'next/image'
 
-const ImageUpload = ({ defaultValue, setValue }) => {
+const ImageUpload = ({ defaultValue, setValue, key = 'image' }) => {
   const [imageSrc, setImageSrc] = useState(defaultValue)
   const [loading, setLoading] = useState(false)
   const [uploadData, setUploadData] = useState()
@@ -34,7 +34,7 @@ const ImageUpload = ({ defaultValue, setValue }) => {
       })
       const data = await res.json()
       setImageSrc(data.secure_url)
-      setValue('image', data.secure_url)
+      setValue(key, data.secure_url)
       setUploadData(data)
     } catch (error) {
       console.log(error)
