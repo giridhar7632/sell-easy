@@ -24,7 +24,7 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
       setValue('name', defaultValues.name)
       setValue('description', defaultValues.description)
       setValue('price', defaultValues.price)
-      setValue('category', defaultValues.category)
+      setValue('category', defaultValues.category._id)
       setValue('condition', defaultValues.condition)
       setValue('image', defaultValues.image)
       setValue('media', defaultValues.media)
@@ -91,26 +91,14 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
                   'm-0 rounded-md transition ease-in-out focus:border-teal-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:ring-teal-100',
                   errors?.condition ? 'border-red-300 ring ring-red-300' : 'border-gray-300',
                 ])}
+                defaultValue={defaultValues?.condition}
                 {...register('condition', { required: 'Condition is required!' })}
               >
-                <option selected={!defaultValues?.condition} disabled>
-                  Choose a condition
-                </option>
-                <option selected={defaultValues?.category === 'New'} vlaue={'New'}>
-                  New
-                </option>
-                <option
-                  selected={defaultValues?.category === 'Used - like new'}
-                  vlaue={'Used - like new'}
-                >
-                  Used - like new
-                </option>
-                <option selected={defaultValues?.category === 'Used - good'} vlaue={'Used - good'}>
-                  Used - good
-                </option>
-                <option selected={defaultValues?.category === 'Used - fair'} vlaue={'Used - fair'}>
-                  Used - fair
-                </option>
+                <option disabled>Choose a condition</option>
+                <option vlaue={'New'}>New</option>
+                <option vlaue={'Used - like new'}>Used - like new</option>
+                <option vlaue={'Used - good'}>Used - good</option>
+                <option vlaue={'Used - fair'}>Used - fair</option>
               </select>
               {errors?.condition ? (
                 <p className="mt-2 text-xs text-red-500">{errors?.condition?.message}</p>
@@ -129,16 +117,13 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
                   errors?.category ? 'border-red-300 ring ring-red-300' : 'border-gray-300',
                 ])}
                 {...register('category', { required: 'Category is required!' })}
+                defaultValue={
+                  defaultValues?.category ? defaultValues.category._id : 'Choose a category'
+                }
               >
-                <option selected={!defaultValues?.category} disabled>
-                  Choose a category
-                </option>
+                <option disabled>Choose a category</option>
                 {categories?.map((category) => (
-                  <option
-                    selected={defaultValues?.category === category._id}
-                    key={category._id}
-                    value={category._id}
-                  >
+                  <option key={category._id} value={category._id}>
                     {category.name}
                   </option>
                 ))}

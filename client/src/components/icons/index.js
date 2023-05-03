@@ -101,14 +101,6 @@ export function Logout(props) {
   )
 }
 
-{
-  /* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-logout" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="" />
-  <path d="" />
-</svg> */
-}
-
 export function Cart(props) {
   return GenerateIcon(
     {
@@ -148,14 +140,6 @@ export function Cart(props) {
   )
 }
 
-{/* <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart-plus" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <circle cx="6" cy="19" r="2" />
-  <circle cx="17" cy="19" r="2" />
-  <path d="M17 17h-11v-14h-2" />
-  <path d="M6 5l6.005 .429m7.138 6.573l-.143 .998h-13" />
-  <path d="M15 6h6m-3 -3v6" />
-</svg> */}
 export function AddToCart(props) {
   return GenerateIcon(
     {
@@ -199,13 +183,6 @@ export function AddToCart(props) {
     },
     props
   )
-}
-
-{
-  /* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-heart" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-</svg> */
 }
 
 export function Heart(props) {
@@ -289,6 +266,50 @@ export function ChevronRight(props) {
         strokeLinejoin: 'round',
       },
       child: [{ tag: 'polyline', attr: { points: '9 6 15 12 9 18' } }],
+    },
+    props
+  )
+}
+
+export function Message(props) {
+  return GenerateIcon(
+    {
+      tag: 'svg',
+      attr: {
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+      },
+      child: [
+        {
+          tag: 'path',
+          attr: {
+            d: 'M4 21v-13a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-9l-4 4',
+          },
+        },
+        { tag: 'line', attr: { x1: '8', y1: '9', x2: '16', y2: '9' } },
+        { tag: 'line', attr: { x1: '8', y1: '13', x2: '14', y2: '13' } },
+      ],
+    },
+    props
+  )
+}
+export function ChevronLeft(props) {
+  return GenerateIcon(
+    {
+      tag: 'svg',
+      attr: {
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+      },
+      child: [{ tag: 'polyline', attr: { points: '15 6 9 12 15 18' } }],
     },
     props
   )

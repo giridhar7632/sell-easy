@@ -3,26 +3,29 @@ import React, { Fragment, useState } from 'react'
 import Button from '../common/Button'
 import { Close } from '../icons'
 import ProductForm from '../ProductForm'
+import useFetcher from '@/hooks/useFetcher'
+import useToast from '@/hooks/useToast'
 
-const UpdateProduct = ({ product, ...props }) => {
+const UpdateProduct = ({ product, setProduct, ...props }) => {
   const [isOpen, setIsOpen] = useState(false)
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
+  const fetcher = useFetcher()
+  const toast = useToast()
 
   const onFormSubmit = async (data) => {
     try {
-      await fetch(`/api/products/updateProduct`, {
+      const newProduct = await fetcher(`/api/products/${product._id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: product.id, ...data }),
-      }).then(() => {
-        handleClose()
-        window.location.reload()
+        token: props.token,
+        body: data,
       })
+
+      setProduct(newProduct)
     } catch (error) {
-      console.log(error)
+      error?.message
+        ? toast.open({ message: error.message, type: 'error' })
+        : toast.open({ message: 'Something went wrong! 😕', type: 'error' })
     }
   }
 
@@ -62,7 +65,14 @@ const UpdateProduct = ({ product, ...props }) => {
                     className="mb-5 flex items-center justify-between text-lg font-semibold leading-6 text-gray-800"
                   >
                     <h3>Update Product</h3>
-                    <Close onClick={handleClose} />
+                    <button
+                      className={
+                        'inline-flex items-center rounded-xl p-2 font-bold hover:ring hover:ring-gray-100'
+                      }
+                      onClick={handleClose}
+                    >
+                      <Close width={24} />
+                    </button>
                   </Dialog.Title>
 
                   <ProductForm

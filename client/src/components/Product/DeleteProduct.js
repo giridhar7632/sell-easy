@@ -1,32 +1,41 @@
 import { Dialog, Transition } from '@headlessui/react'
 import React, { Fragment, useState } from 'react'
 import Button from '../common/Button'
+import useFetcher from '@/hooks/useFetcher'
+import { useRouter } from 'next/router'
+import useToast from '@/hooks/useToast'
 
 const DeleteProduct = ({ productId, ...props }) => {
   const [isOpen, setIsOpen] = useState(false)
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
+  const fetcher = useFetcher()
+  const router = useRouter()
+  const toast = useToast()
 
   const handleDelete = async () => {
     try {
-      await fetch(`/api/products/deleteProduct`, {
+      await fetcher(`/api/products/${productId}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: productId }),
-      }).then(() => {
-        handleClose()
-        window.location.replace('/products')
+        token: props.token,
       })
+      router.push('/sell')
     } catch (error) {
       console.log(error)
+      error?.message
+        ? toast.open({ message: error.message, type: 'error' })
+        : toast.open({ message: 'Something went wrong! 😕', type: 'error' })
     }
   }
 
   return (
     <>
-      <Button onClick={handleOpen} variant="text" type="button" {...props}>
+      <Button
+        className={'bg-red-500 ring-red-100 hover:bg-red-600'}
+        onClick={handleOpen}
+        type="button"
+        {...props}
+      >
         Delete
       </Button>
       <Transition appear show={isOpen} as={Fragment}>
@@ -63,7 +72,7 @@ const DeleteProduct = ({ productId, ...props }) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Do you really want to delete the product?
+                      Do you really want to unlist this product?
                     </p>
                   </div>
 

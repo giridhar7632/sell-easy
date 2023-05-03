@@ -173,6 +173,8 @@ router.put('/:id', isAuth, async (req, res) => {
   try {
     const productId = req.params.id
     const product = await Product.findById(productId)
+      .populate('seller', '_id name profileImage')
+      .populate('category', '_id, name')
 
     if (!product) {
       return res.status(404).json({

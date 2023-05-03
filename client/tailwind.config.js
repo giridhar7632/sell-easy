@@ -7,6 +7,9 @@ module.exports = {
       colors: {
         primary: '#F4DE4D',
       },
+      screens: {
+        xl: '1440px',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],
