@@ -160,7 +160,7 @@ export async function getStaticProps({ params }) {
   const data = await res.json()
   try {
     return {
-      props: { product: data, message: data.message, type: data.type },
+      props: { product: data, message: data?.message || null, type: data?.type || null },
       revalidate: 60 * 60,
     }
   } catch (error) {

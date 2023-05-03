@@ -1,4 +1,6 @@
+import ProductsList from '@/components/Profile/ProductList'
 import { ProfileForm } from '@/components/Profile/ProfileForm'
+import ReviewList from '@/components/Reviews/ReviewList'
 import Loader from '@/components/common/Loader'
 import { Email, Facebook, Instagram, Twitter } from '@/components/icons'
 import Layout from '@/components/layout'
@@ -59,8 +61,8 @@ const Profile = () => {
   }, [router.query.id])
 
   const tabs = {
-    Reviews: 'review',
-    Products: 'products',
+    Reviews: <ReviewList reviews={profile?.reviews || []} />,
+    Products: <ProductsList token={isAuth} userId={profile?._id} />,
     ...(router.query.id === 'me'
       ? {
           Comments: 'comments',

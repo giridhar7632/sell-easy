@@ -119,9 +119,10 @@ router.get('/:id/reviews', isAuth, async (req, res) => {
 router.get('/:id/products', async (req, res) => {
   try {
     const products = await Product.find({ seller: req.params.id })
+      .select('_id name image category price createdAt')
       .populate('category')
-      .populate('reviews')
-      .populate('seller', '_id name profileImage')
+    // .populate('reviews')
+    // .populate('seller', '_id name profileImage')
 
     console.log({ products })
 
