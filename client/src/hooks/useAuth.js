@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuth(res.accessToken)
       setUser(res.user)
       toast.open(res)
-      router.push('/')
+      router.push('/explore')
     } catch (error) {
       error?.message
         ? toast.open({ message: error.message, type: 'error' })

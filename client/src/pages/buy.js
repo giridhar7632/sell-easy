@@ -10,7 +10,7 @@ import useFetcher from '@/hooks/useFetcher'
 import { useCategory } from '@/hooks/useCategories'
 import Loader from '@/components/common/Loader'
 
-const PAGE_SIZE = 1
+const PAGE_SIZE = 9
 
 const Buy = () => {
   const router = useRouter()
@@ -18,6 +18,7 @@ const Buy = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currPage, setCurrPage] = useState(router.query.page || 1)
   const [pages, setPages] = useState(1)
+  const [isLoading, setIsLoding] = useState(true)
   const [error, setError] = useState('')
   const fetcher = useFetcher()
   const { categories, loading } = useCategory()
@@ -36,6 +37,7 @@ const Buy = () => {
   }
 
   const fetchProducts = async (page = 1, category = '') => {
+    setIsLoding(true)
     try {
       const query = searchTerm ? `search=${searchTerm}&` : category ? `categoryId=${category}&` : ''
       const res = await fetcher(`/api/products?${query}page=${page}&limit=${PAGE_SIZE}`)
@@ -45,6 +47,7 @@ const Buy = () => {
       console.log(error)
       setError(error?.message || 'Something went wrong! 😕')
     }
+    setIsLoding(false)
   }
 
   useEffect(() => {
@@ -150,7 +153,11 @@ const Buy = () => {
               )}
             </div>
             <div className="flex flex-1 flex-wrap">
-              {products?.length ? (
+              {isLaoding ? (
+                <div className={'min-h-50vh'}>
+                  <Loader size={24} />
+                </div>
+              ) : products?.length ? (
                 <ProductsList products={products} />
               ) : (
                 <div className={'w-full text-center text-xl font-bold text-gray-300'}>
