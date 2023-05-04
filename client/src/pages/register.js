@@ -26,7 +26,7 @@ const Register = () => {
             {status}
           </div>
         ) : null} */}
-        <ProfileForm isLoading={isLoading} onFormSubmit={registerUser} />
+        <ProfileForm onFormSubmit={registerUser} />
 
         <div className="my-6">
           {'Already have a profile?'} <Link href={'login'}>Login</Link>
