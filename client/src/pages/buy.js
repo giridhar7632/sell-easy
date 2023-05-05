@@ -153,7 +153,7 @@ const Buy = () => {
               )}
             </div>
             <div className="flex flex-1 flex-wrap">
-              {isLaoding ? (
+              {isLoading ? (
                 <div className={'min-h-50vh'}>
                   <Loader size={24} />
                 </div>
