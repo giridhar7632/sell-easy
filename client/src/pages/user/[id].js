@@ -92,7 +92,7 @@ const Profile = () => {
       {isLoading ? (
         <Loader />
       ) : status ? (
-        <div className={'w-full text-center text-2xl font-bold text-gray-400'}>{status}</div>
+        <div className={'w-full text-center text-2xl font-bold text-gray-300'}>{status}</div>
       ) : (
         <div className="mx-auto flex max-w-lg flex-col">
           <div className="flex flex-col items-center justify-center">

@@ -31,7 +31,7 @@ const Product = ({ product, error, message, type }) => {
   if (error || type === 'error')
     return (
       <Layout meta={{ name: 'Product' }}>
-        <div className={'w-full text-center text-2xl font-bold text-gray-400'}>{message}</div>
+        <div className={'w-full text-center text-2xl font-bold text-gray-300'}>{message}</div>
       </Layout>
     )
 

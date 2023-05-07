@@ -39,7 +39,7 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="px-4 py-2">
         <h2 className="my-2 truncate text-lg font-medium">{product.name}</h2>
-        <p className="text-xs font-semibold text-gray-400">Price</p>
+        <p className="text-xs font-semibold text-gray-300">Price</p>
         <div className="flex items-center justify-between">
           <p className="text-lg font-medium">₹ {product.price}</p>
           {/* <IconButton onClick={() => console.log(product.name)}>

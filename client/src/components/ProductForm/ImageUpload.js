@@ -64,7 +64,7 @@ const ImageUpload = ({ defaultValue, setValue, name = 'image' }) => {
             alt=""
           />
         )}
-        {imageSrc && !uploadData && !defaultValue && (
+        {imageSrc && !uploadData && (
           <Button
             type="submit"
             variant="secondary"

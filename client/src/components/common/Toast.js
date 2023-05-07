@@ -23,7 +23,7 @@ export default function Toast({ type, message, close }) {
         <div
           id="toast-success"
           className={clsx(
-            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg border border-gray-200 bg-white p-4 text-gray-500 transition-transform duration-300 dark:bg-gray-800 dark:text-gray-400',
+            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg border border-gray-200 bg-white p-4 text-gray-500 transition-transform duration-300 dark:bg-gray-800 dark:text-gray-300',
             visible ? 'scale-100' : 'scale-0'
           )}
           role="alert"
@@ -47,7 +47,7 @@ export default function Toast({ type, message, close }) {
           <div className="ml-3 text-sm font-normal">{message}</div>
           <button
             type="button"
-            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-300 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
             data-dismiss-target="#toast-success"
             aria-label="Close"
             onClick={close}
@@ -72,7 +72,7 @@ export default function Toast({ type, message, close }) {
         <div
           id="toast-danger"
           className={clsx(
-            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow transition-transform duration-300 dark:bg-gray-800 dark:text-gray-400',
+            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow transition-transform duration-300 dark:bg-gray-800 dark:text-gray-300',
             visible ? 'scale-100' : 'scale-0'
           )}
           role="alert"
@@ -96,7 +96,7 @@ export default function Toast({ type, message, close }) {
           <div className="ml-3 text-sm font-normal">{message}</div>
           <button
             type="button"
-            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-300 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
             data-dismiss-target="#toast-danger"
             aria-label="Close"
             onClick={close}
@@ -121,7 +121,7 @@ export default function Toast({ type, message, close }) {
         <div
           id="toast-warning"
           className={clsx(
-            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow transition-transform duration-300 dark:bg-gray-800 dark:text-gray-400',
+            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow transition-transform duration-300 dark:bg-gray-800 dark:text-gray-300',
             visible ? 'scale-100' : 'scale-0'
           )}
           role="alert"
@@ -145,7 +145,7 @@ export default function Toast({ type, message, close }) {
           <div className="ml-3 text-sm font-normal">{message}</div>
           <button
             type="button"
-            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-300 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
             data-dismiss-target="#toast-warning"
             aria-label="Close"
             onClick={close}
@@ -170,7 +170,7 @@ export default function Toast({ type, message, close }) {
         <div
           id="toast-default"
           className={clsx(
-            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow transition-transform duration-300 dark:bg-gray-800 dark:text-gray-400',
+            'pointer-events-auto mx-auto my-2 flex w-full max-w-xs items-center rounded-lg bg-white p-4 text-gray-500 shadow transition-transform duration-300 dark:bg-gray-800 dark:text-gray-300',
             visible ? 'scale-100' : 'scale-0'
           )}
           role="alert"
@@ -194,7 +194,7 @@ export default function Toast({ type, message, close }) {
           <div className="ml-3 text-sm font-normal">{message}</div>
           <button
             type="button"
-            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-white p-1.5 text-gray-300 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-white"
             data-dismiss-target="#toast-default"
             aria-label="Close"
             onClick={close}

@@ -5,10 +5,12 @@ import AddReview from './AddReview'
 const ReviewList = ({ reviews, userId }) => {
   const [currReviews, setCurrReviews] = useState(reviews)
   return currReviews.length <= 0 ? (
-    <div className={'w-full text-center text-2xl font-bold text-gray-400'}>
+    <>
       <AddReview userId={userId} setReviews={setCurrReviews} />
-      {'No reviews yet! 😐'}
-    </div>
+      <div className={'w-full py-4 text-center text-xl font-bold text-gray-300'}>
+        {'No reviews yet! 😐'}
+      </div>
+    </>
   ) : (
     <ul className="w-full">
       <AddReview userId={userId} setReviews={setCurrReviews} />

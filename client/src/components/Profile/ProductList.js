@@ -28,9 +28,9 @@ const ProductsList = ({ token, userId }) => {
   return isLoading ? (
     <Loader />
   ) : error ? (
-    <div className={'w-full text-center text-2xl font-bold text-gray-400'}>{error}</div>
+    <div className={'w-full py-4 text-center text-xl font-bold text-gray-300'}>{error}</div>
   ) : products.length <= 0 ? (
-    <div className={'w-full text-center text-2xl font-bold text-gray-400'}>
+    <div className={'w-full py-4 text-center text-xl font-bold text-gray-300'}>
       {'No products listed yet! 😐'}
     </div>
   ) : (

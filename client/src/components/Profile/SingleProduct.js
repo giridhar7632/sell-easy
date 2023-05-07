@@ -17,7 +17,7 @@ const SingleProduct = ({ image, name, price, _id, createdAt, category }) => {
       <a className={'p-4'} href={`/product/${_id}`}>
         <div className={'ml-3 flex flex-col gap-1'}>
           <p className="my-2 text-xl font-semibold text-gray-800">{name}</p>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-300">
             Price: <span className="text-lg font-bold text-gray-900">₹ {price}</span>{' '}
           </p>
           {category && (

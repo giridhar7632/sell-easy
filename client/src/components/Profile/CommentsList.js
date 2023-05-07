@@ -29,9 +29,9 @@ const CommentsList = ({ token }) => {
   return isLoading ? (
     <Loader />
   ) : error ? (
-    <div className={'w-full text-center text-2xl font-bold text-gray-400'}>{error}</div>
+    <div className={'w-full py-4 text-center text-xl font-bold text-gray-300'}>{error}</div>
   ) : reviews.length <= 0 ? (
-    <div className={'w-full text-center text-2xl font-bold text-gray-400'}>
+    <div className={'w-full py-4 text-center text-xl font-bold text-gray-300'}>
       {'No comments added yet! 😐'}
     </div>
   ) : (

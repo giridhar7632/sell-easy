@@ -18,7 +18,6 @@ const Buy = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currPage, setCurrPage] = useState(router.query.page || 1)
   const [pages, setPages] = useState(1)
-  const [isLoading, setIsLoding] = useState(true)
   const [error, setError] = useState('')
   const fetcher = useFetcher()
   const { categories, loading } = useCategory()
@@ -37,7 +36,6 @@ const Buy = () => {
   }
 
   const fetchProducts = async (page = 1, category = '') => {
-    setIsLoding(true)
     try {
       const query = searchTerm ? `search=${searchTerm}&` : category ? `categoryId=${category}&` : ''
       const res = await fetcher(`/api/products?${query}page=${page}&limit=${PAGE_SIZE}`)
@@ -47,7 +45,6 @@ const Buy = () => {
       console.log(error)
       setError(error?.message || 'Something went wrong! 😕')
     }
-    setIsLoding(false)
   }
 
   useEffect(() => {
@@ -114,7 +111,7 @@ const Buy = () => {
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 type={'text'}
-                className="flex-1 border-none bg-transparent outline-none"
+                className="flex-1 border-none outline-none"
                 placeholder="Search among wide range of products"
               ></input>
             </div>
@@ -153,11 +150,7 @@ const Buy = () => {
               )}
             </div>
             <div className="flex flex-1 flex-wrap">
-              {isLoading ? (
-                <div className={'min-h-50vh'}>
-                  <Loader size={24} />
-                </div>
-              ) : products?.length ? (
+              {products?.length ? (
                 <ProductsList products={products} />
               ) : (
                 <div className={'w-full text-center text-xl font-bold text-gray-300'}>

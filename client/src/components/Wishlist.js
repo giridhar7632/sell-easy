@@ -13,7 +13,7 @@ const WishlistSidebar = ({ open, toggle }) => {
       {isLoading ? (
         <Loader />
       ) : status ? (
-        <div className={'mt-10 w-full text-center text-2xl font-bold text-gray-400'}>{status}</div>
+        <div className={'mt-10 w-full text-center text-2xl font-bold text-gray-300'}>{status}</div>
       ) : (
         <div className="mt-6">
           {!wishlist.products.length ? (
