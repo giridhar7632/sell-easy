@@ -5,6 +5,19 @@ const Review = require('../models/review')
 const Product = require('../models/product')
 const User = require('../models/user')
 
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find({})
+    return res.status(200).json(users)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      message: 'Internal server error! 😢',
+      type: 'error',
+    })
+  }
+})
+
 // Define route for getting user's own profile information
 // 644b9943abb40e22051e672a : 5139
 // 644bb98031828d3660be9c60 : 2002

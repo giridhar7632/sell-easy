@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       href={`/product/${product._id}`}
-      className="group w-[100%] cursor-pointer overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-sm md:w-[48%] lg:w-[32%]"
+      className="group w-[100%] cursor-pointer overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-sm md:w-[48%] lg:w-[31%]"
     >
       {/* <div> */}
       <div className="relative h-72 w-full overflow-hidden">

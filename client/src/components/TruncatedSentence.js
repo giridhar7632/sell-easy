@@ -3,8 +3,8 @@ import { useState } from 'react'
 
 export default function TruncatedSentence({ className, children }) {
   const [showFull, setShowFull] = useState(false)
-  const isLarge = children.split(' ').length > 50
-  const truncatedSentence = children.split(' ').slice(0, 50).join(' ')
+  const isLarge = children.split(' ').length > 30
+  const truncatedSentence = children.split(' ').slice(0, 30).join(' ')
   const fullSentence = children
 
   return (

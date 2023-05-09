@@ -69,7 +69,7 @@ export default function Index() {
           </div>
         </div>
         <div className={'hidden w-[80%] md:block'}>
-          <Image height={300} width={300} src={'/logo.png'} alt={'sell easy'} />
+          {/* <Image height={300} width={300} src={'/logo.png'} alt={'sell easy'} /> */}
         </div>
       </main>
       {/* <Footer type={'hero'} /> */}

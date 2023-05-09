@@ -12,7 +12,7 @@ import Loader from '@/components/common/Loader'
 
 const PAGE_SIZE = 9
 
-const Buy = () => {
+const Category = () => {
   const router = useRouter()
   const [products, setProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -168,4 +168,4 @@ const Buy = () => {
   )
 }
 
-export default Buy
+export default Category
