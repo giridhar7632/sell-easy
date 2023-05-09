@@ -30,7 +30,7 @@ const BestSellers = () => {
       <div className="my-12 w-full">
         <h2 className="text-2xl font-semibold">Best Sellers:</h2>
         <p className="text-md">
-          Find out who's selling the most popular items. Check out our top-rated sellers.
+          Find out who&apos;s selling the most popular items. Check out our top-rated sellers.
         </p>
         <div className="my-6 flex w-full flex-wrap gap-4">
           {isLoading ? (

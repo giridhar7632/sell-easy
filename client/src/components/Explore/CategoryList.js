@@ -9,7 +9,7 @@ const CategoryList = () => {
       <div className="my-12 w-full">
         <h2 className="text-2xl font-semibold">Category:</h2>
         <p className="text-md">
-          Choose from a variety of categories. Find what you're looking for by category.
+          Choose from a variety of categories. Find what you&apos;re looking for by category.
         </p>
         <div className="my-6 flex w-full flex-wrap gap-4">
           {categories.map((i) => (
