@@ -12,34 +12,67 @@ import Loader from '@/components/common/Loader'
 
 const PAGE_SIZE = 9
 
-const Buy = () => {
-  const router = useRouter()
-  const [products, setProducts] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [currPage, setCurrPage] = useState(router.query.page || 1)
-  const [pages, setPages] = useState(1)
-  const [isLoading, setIsLoding] = useState(true)
-  const [error, setError] = useState('')
-  const fetcher = useFetcher()
+const Buy = ({ data, totalPages, category, servererror }) => {
+  const { query, push } = useRouter()
+  const [products, setProducts] = useState(data)
+  const [pages, setPages] = useState(totalPages)
+  const [searchTerm, setSearchTerm] = useState(query.search || '')
+  const [currPage, setCurrPage] = useState(parseInt(query.page, 10) || 1)
+  const [isLoading, setIsLoding] = useState(false)
+  const [error, setError] = useState(servererror || '')
   const { categories, loading } = useCategory()
   const [selectedCategory, setSelectedCategory] = useState('')
+  const fetcher = useFetcher()
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category)
-    router.push({
-      pathname: router.pathname,
+    setCurrPage(1)
+    push({
+      pathname: '/buy',
       query: {
         category,
-        page: currPage,
+        page: 1,
       },
     })
-    fetchProducts(1, category)
   }
 
-  const fetchProducts = async (page = 1, category = '') => {
+  const handleSearch = throttle((value) => {
+    setSearchTerm(value)
+    setCurrPage(1)
+    push({
+      pathname: '/buy',
+      query: {
+        search: value,
+        page: 1,
+        category: selectedCategory,
+      },
+    })
+  }, 500)
+
+  const handlePageChange = (page) => {
+    setCurrPage(page)
+    push({
+      pathname: '/buy',
+      query: {
+        page,
+        category: selectedCategory,
+        search: searchTerm,
+      },
+    })
+  }
+
+  useEffect(() => {
+    fetchProducts(currPage, searchTerm, selectedCategory)
+  }, [currPage, searchTerm, selectedCategory])
+
+  const fetchProducts = async (page = 1, searchTerm = '', selectedCategory = '') => {
     setIsLoding(true)
     try {
-      const query = searchTerm ? `search=${searchTerm}&` : category ? `categoryId=${category}&` : ''
+      const query = searchTerm
+        ? `search=${searchTerm}&`
+        : selectedCategory
+        ? `categoryId=${selectedCategory}&`
+        : ''
       const res = await fetcher(`/api/products?${query}page=${page}&limit=${PAGE_SIZE}`)
       setProducts(res.data)
       setPages(res.totalPages)
@@ -49,54 +82,6 @@ const Buy = () => {
     }
     setIsLoding(false)
   }
-
-  useEffect(() => {
-    fetchProducts()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // useEffect(() => {
-  //   const handleRouteChange = (url) => {
-  //     const query = searchTerm ? `?search=${searchTerm}&page=${currPage}` : ''
-  //     router.push(`${url.split('?')[0]}${query}`)
-  //   }
-  //   router.events.on('routeChangeComplete', handleRouteChange)
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange)
-  //   }
-  // }, [router, searchTerm, currPage])
-
-  const handleSearch = throttle((value) => {
-    setSearchTerm(value)
-    setCurrPage(1)
-    fetchProducts(1)
-    router.push({
-      pathname: router.pathname,
-      query: {
-        search: value,
-        page: currPage,
-      },
-    })
-  }, 500)
-
-  const handlePageChange = (page) => {
-    setCurrPage(page)
-    router.push({
-      pathname: router.pathname,
-      query: {
-        category: selectedCategory,
-        page,
-      },
-    })
-    fetchProducts(page, selectedCategory)
-  }
-
-  // useEffect(() => {
-  //   const queryPage = Number(router.query.page)
-  //   if (queryPage && queryPage !== currPage) {
-  //     setCurrPage(queryPage)
-  //   }
-  // }, [router.query.page, currPage])
 
   return (
     <Layout meta={{ name: 'Buy' }}>
@@ -130,7 +115,7 @@ const Buy = () => {
                     <button
                       onClick={() => handleCategoryChange('')}
                       className={`font-medium text-gray-600 ${
-                        selectedCategory === '' ? 'underline' : ''
+                        selectedCategory === category._id ? 'text-teal-500' : ''
                       }`}
                     >
                       All
@@ -176,3 +161,21 @@ const Buy = () => {
 }
 
 export default Buy
+
+// This gets called on every request
+export async function getServerSideProps(context) {
+  try {
+    const id = context.query?.id ? context.query.id : ''
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/products?limit=9${id ? `&category=${id}` : ''}`
+    )
+    const data = await res.json()
+
+    // Pass data to the page via props
+    return { props: { data: data.data, totalPages: data.totalPages, category: id } }
+  } catch (error) {
+    return {
+      props: { data: [], totalPages: 1, category: '', error: 'Something went wrong! 😕' },
+    }
+  }
+}

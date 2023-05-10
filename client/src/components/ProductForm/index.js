@@ -61,7 +61,6 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
             type="text"
             error={errors?.description}
             register={register('description')}
-            multiline
           />
           <Input
             divClass="flex-1"
