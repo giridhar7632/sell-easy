@@ -1,29 +1,13 @@
 const { Schema, model } = require('mongoose')
 
-const messageSchema = new Schema(
+const MessageSchema = new Schema(
   {
-    sender: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    receiver: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    message: {
-      type: String,
-      required: true,
-    },
-    read: {
-      type: Boolean,
-      default: false,
-    },
+    sender: { type: Schema.Types.ObjectId, ref: 'User' },
+    content: { type: String, trim: true },
+    chat: { type: Schema.Types.ObjectId, ref: 'Chat' },
+    readBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 )
 
-module.exports = model('Message', messageSchema)
+module.exports = model('Message', MessageSchema)

@@ -36,7 +36,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "nodemailer": "^6.9.1",
-    "react-hot-toast": "^2.4.1"
+    "socket.io": "^4.6.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
@@ -56,14 +56,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testTimeout": 10000,
-    "testPathIgnorePatterns": [
-      "/src/tests/main.test.js",
-      "/src/tests/auth.test.js",
-      "/src/tests/category.test.js",
-      "/src/tests/user.test.js",
-      "/src/tests/product.test.js"
-    ]
+    "testTimeout": 10000
   },
   "engines": {
     "node": ">=16.14"
