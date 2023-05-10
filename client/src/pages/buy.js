@@ -63,6 +63,7 @@ const Buy = ({ data, totalPages, category, servererror }) => {
 
   useEffect(() => {
     fetchProducts(currPage, searchTerm, selectedCategory)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currPage, searchTerm, selectedCategory])
 
   const fetchProducts = async (page = 1, searchTerm = '', selectedCategory = '') => {
@@ -138,11 +139,7 @@ const Buy = ({ data, totalPages, category, servererror }) => {
               )}
             </div>
             <div className="flex flex-1 flex-wrap">
-              {isLoading ? (
-                <div className={'min-h-50vh'}>
-                  <Loader size={24} />
-                </div>
-              ) : products?.length ? (
+              {products?.length ? (
                 <ProductsList products={products} />
               ) : (
                 <div className={'w-full text-center text-xl font-bold text-gray-300'}>
