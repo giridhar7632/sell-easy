@@ -183,7 +183,7 @@ router.put('/:id', isAuth, async (req, res) => {
       })
     }
 
-    if (product.seller.toString() !== req.user._id.toString()) {
+    if (product.seller._id.toString() !== req.user._id.toString()) {
       return res.status(401).json({
         message: 'You are not authorized to perform this action! 🔒',
         type: 'error',
