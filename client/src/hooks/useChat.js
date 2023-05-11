@@ -56,6 +56,10 @@ export const ChatProvider = ({ children }) => {
     return users[0]._id === user._id ? users[1].name : users[0].name
   }
 
+  const getSenderDetails = (users) => {
+    return users[0]._id === user._id ? users[1].name : users[0].name
+  }
+
   return (
     <ChatContext.Provider
       value={{
@@ -72,6 +76,7 @@ export const ChatProvider = ({ children }) => {
         isLoading,
         status,
         getSender,
+        getSenderDetails,
       }}
     >
       {children}

@@ -7,12 +7,49 @@ function GenerateIcon(data, props) {
   return React.createElement(data.tag, { ...data.attr, ...props }, children)
 }
 
+export function ArrowLeft(props) {
+  return GenerateIcon(
+    {
+      tag: 'svg',
+      attr: {
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+      },
+      child: [
+        {
+          tag: 'path',
+          attr: {
+            d: 'M5 12l14 0',
+          },
+        },
+        {
+          tag: 'path',
+          attr: {
+            d: 'M5 12l6 6',
+          },
+        },
+        {
+          tag: 'path',
+          attr: {
+            d: 'M5 12l6 -6',
+          },
+        },
+      ],
+    },
+    props
+  )
+}
+
 {
-  /* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  /* <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg> */
+  <path d="" />
+  <path d="" />
+</svg>*/
 }
 
 export function Search(props) {
@@ -62,6 +99,37 @@ export function User(props) {
           tag: 'path',
           attr: {
             d: 'M6 13.75C3.65279 13.75 1.75 15.6528 1.75 18V19C1.75 19.4142 1.41421 19.75 1 19.75C0.585786 19.75 0.25 19.4142 0.25 19V18C0.25 14.8244 2.82436 12.25 6 12.25H12C15.1756 12.25 17.75 14.8244 17.75 18V19C17.75 19.4142 17.4142 19.75 17 19.75C16.5858 19.75 16.25 19.4142 16.25 19V18C16.25 15.6528 14.3472 13.75 12 13.75H6Z',
+          },
+        },
+      ],
+    },
+    props
+  )
+}
+
+export function Send(props) {
+  return GenerateIcon(
+    {
+      tag: 'svg',
+      attr: {
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+      },
+      child: [
+        {
+          tag: 'path',
+          attr: {
+            d: 'M10 14l11 -11',
+          },
+        },
+        {
+          tag: 'path',
+          attr: {
+            d: 'M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5',
           },
         },
       ],
