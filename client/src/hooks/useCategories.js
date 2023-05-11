@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import axios from 'axios'
 import useFetcher from './useFetcher'
 import { useAuth } from './useAuth'
 

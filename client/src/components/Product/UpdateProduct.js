@@ -6,7 +6,7 @@ import ProductForm from '../ProductForm'
 import useFetcher from '@/hooks/useFetcher'
 import useToast from '@/hooks/useToast'
 
-const UpdateProduct = ({ product, setProduct, ...props }) => {
+const UpdateProduct = ({ product, setProduct, token, ...props }) => {
   const [isOpen, setIsOpen] = useState(false)
   const handleClose = () => setIsOpen(false)
   const handleOpen = () => setIsOpen(true)
@@ -15,13 +15,24 @@ const UpdateProduct = ({ product, setProduct, ...props }) => {
 
   const onFormSubmit = async (data) => {
     try {
-      const newProduct = await fetcher(`/api/products/${product._id}`, {
+      const res = await fetcher(`/api/products/${product._id}`, {
         method: 'PUT',
-        token: props.token,
+        token: token,
         body: data,
       })
 
-      setProduct(newProduct)
+      // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${product._id}`, {
+      //   method: 'PUT',
+      //   headers: {
+      //     'content-type': 'application/json',
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      // const newData = await res.json()
+      console.log({ data, res })
+      setProduct(newProduct.product)
+      handleClose()
     } catch (error) {
       error?.message
         ? toast.open({ message: error.message, type: 'error' })

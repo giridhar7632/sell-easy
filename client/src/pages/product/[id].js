@@ -1,11 +1,9 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import Layout from '@/components/layout'
 import { useAuth } from '@/hooks/useAuth'
-// import Loader from '@/components/common/Loader'
-// import { useTransition, animated } from 'react-spring'
 import { useWishlist } from '@/hooks/useWishlist'
-import Link from 'next/link'
 import { Heart, Message } from '@/components/icons'
 import Button from '@/components/common/Button'
 import SmallProfile from '@/components/Profile/SmallProfile'
@@ -13,6 +11,7 @@ import TruncatedSentence from '@/components/TruncatedSentence'
 import getRandomColor from '@/utils/randomColor'
 import UpdateProduct from '@/components/Product/UpdateProduct'
 import DeleteProduct from '@/components/Product/DeleteProduct'
+import { useChat } from '@/hooks/useChat'
 
 const Product = ({ product, error, message, type }) => {
   const [currentProduct, setCurrentProduct] = useState(product)
@@ -20,12 +19,18 @@ const Product = ({ product, error, message, type }) => {
   const [wishlisted, setWishlisted] = useState(isProductInWishlist(product?._id))
   const hasMedia = product?.media?.length > 0
   const { isAuth, user } = useAuth()
+  const { startChat, toggleChat } = useChat()
 
   const handleWishlistClick = () => {
     setWishlisted((prev) => !prev)
     wishlisted
       ? removeProductFromWishlist(currentProduct._id)
       : addProductToWishlist(currentProduct._id)
+  }
+
+  const handleBuyNow = async (userId) => {
+    toggleChat()
+    await startChat(userId)
   }
 
   if (error || type === 'error')
@@ -105,7 +110,7 @@ const Product = ({ product, error, message, type }) => {
                   />
                   {wishlisted ? 'Wishlisted' : 'Wishlist'}
                 </button>
-                <Button onClick={() => console.log(currentProduct.name)}>
+                <Button onClick={() => handleBuyNow(currentProduct.seller._id)}>
                   <Message width={24} /> Buy now
                 </Button>
               </div>

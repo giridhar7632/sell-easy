@@ -20,6 +20,7 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
   // { name, description, price, category, seller, image, media }
 
   useEffect(() => {
+    console.log({ defaultValues })
     if (defaultValues) {
       setValue('name', defaultValues.name)
       setValue('description', defaultValues.description)
@@ -33,6 +34,7 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true)
+    console.log({ data })
     await onFormSubmit(data)
     setIsLoading(false)
   })
@@ -144,7 +146,7 @@ const ProductForm = ({ type, defaultValues, onFormSubmit, ...props }) => {
         type="button"
         onClick={onSubmit}
         loading={isLoading}
-        loadingText={type ? `${type}ing Product...` : 'Submitting...'}
+        loadingText={type ? `${type.slice(0, -1)}ing Product...` : 'Submitting...'}
       >
         {type ? `${type} Product` : 'Submit'}
       </Button>

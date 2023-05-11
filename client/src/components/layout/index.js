@@ -4,10 +4,13 @@ import Footer from './Footer'
 import Meta from './Meta'
 import Navbar from './Navbar'
 import { useEffect } from 'react'
+import ChatSidebar from '../Chat'
+import { useChat } from '@/hooks/useChat'
 // import Sidebar from './Sidebar'
 
 const Layout = ({ meta, children, ...props }) => {
   const { wishlistOpen, toggleWishlist } = useWishlist()
+  const { chatOpen, toggleChat } = useChat()
 
   return (
     <div className="max-w-screen min-h-screen">
@@ -21,6 +24,7 @@ const Layout = ({ meta, children, ...props }) => {
         <Footer />
       </div>
       <WishlistSidebar open={wishlistOpen} toggle={toggleWishlist} />
+      <ChatSidebar open={chatOpen} toggle={toggleChat} />
     </div>
   )
 }
