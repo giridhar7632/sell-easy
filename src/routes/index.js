@@ -17,7 +17,7 @@ const logger = require('../utils/logger')
 const { hash } = require('bcryptjs')
 
 // check the status of server
-router.get('/status', function (_req, res) {
+router.get('/', function (_req, res) {
   res.send('Live!! 👌')
 })
 
