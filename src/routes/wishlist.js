@@ -30,10 +30,6 @@ router.post('/', isAuth, async (req, res) => {
       user: req.user._id,
       name: name,
       description: description,
-    }).populate({
-      path: 'products',
-      select: '_id name image price',
-      model: 'Product',
     })
     const savedWishlist = await wishlist.save()
     res.json(savedWishlist)
