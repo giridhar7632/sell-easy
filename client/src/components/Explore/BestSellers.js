@@ -25,7 +25,7 @@ const BestSellers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return users.length ? (
+  return (
     <div className="my-12 w-full">
       <h2 className="text-2xl font-semibold">Best Sellers:</h2>
       <p className="text-md">
@@ -41,8 +41,6 @@ const BestSellers = () => {
         )}
       </div>
     </div>
-  ) : (
-    'Loading...'
   )
 }
 

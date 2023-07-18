@@ -25,7 +25,7 @@ const RecentList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return products.length ? (
+  return (
     <div className="my-12 w-full">
       <h2 className="text-2xl font-semibold">Recent Listings:</h2>
       <p className="text-md">Check out our latest items for sale. Shop our newest listings.</p>
@@ -39,8 +39,6 @@ const RecentList = () => {
         )}
       </div>
     </div>
-  ) : (
-    'Loading...'
   )
 }
 

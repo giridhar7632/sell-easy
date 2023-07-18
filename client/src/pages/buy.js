@@ -108,9 +108,7 @@ const Buy = ({ data, totalPages, category, servererror }) => {
           <div className="container my-4 flex w-full md:my-8">
             <div className="hidden w-[25%] md:block">
               <h2 className="text-lg font-semibold">Category:</h2>
-              {loading ? (
-                <Loader size={24} />
-              ) : (
+              {
                 <ul>
                   <li key="all">
                     <button
@@ -137,7 +135,7 @@ const Buy = ({ data, totalPages, category, servererror }) => {
                       ))
                     : 'Loading...'}
                 </ul>
-              )}
+              }
             </div>
             <div className="flex flex-1 flex-wrap">
               {products?.length ? (
