@@ -31,7 +31,7 @@ const sendRefreshToken = (res, refreshToken) => {
     // httpOnly: true,
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // expires in 7 days
     // domain: 'sell-easy.vercel.app',
-    sameSite: 'none',
+    SameSite: 'None',
     secure: true, // make sure to set this to true if your website is being served over HTTPS
   })
 }
