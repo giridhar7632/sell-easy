@@ -9,6 +9,12 @@ import Link from 'next/link'
 const ProductCard = ({ product }) => {
   const { addProductToWishlist, removeProductFromWishlist, isProductInWishlist } = useWishlist()
   const [wishlisted, setWishlisted] = useState(isProductInWishlist(product._id))
+  const handleWishlistToggle = (e) => {
+    e.preventDefault()
+    setWishlisted((prev) => !prev)
+    wishlisted ? removeProductFromWishlist(product._id) : addProductToWishlist(product._id)
+  }
+
   return (
     <Link
       href={`/product/${product._id}`}
@@ -29,10 +35,7 @@ const ProductCard = ({ product }) => {
             'z-11 absolute top-2 right-2 rounded-full border-0 bg-white p-2 shadow outline-0 hover:bg-gray-100',
             wishlisted && 'text-pink-600'
           )}
-          onClick={() => {
-            setWishlisted((prev) => !prev)
-            wishlisted ? removeProductFromWishlist(product._id) : addProductToWishlist(product._id)
-          }}
+          onClick={handleWishlistToggle}
         >
           <Heart fill={wishlisted ? '#db2777' : 'none'} width={24} />
         </button>
