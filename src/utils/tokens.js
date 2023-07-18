@@ -28,10 +28,11 @@ const sendAccessToken = (_req, res, user, accessToken) => {
 // sending the refresh token to the client as a cookie
 const sendRefreshToken = (res, refreshToken) => {
   res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
+    // httpOnly: true,
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // expires in 7 days
     // domain: 'sell-easy.vercel.app',
-    // secure: true, // make sure to set this to true if your website is being served over HTTPS
+    sameSite: 'none',
+    secure: true, // make sure to set this to true if your website is being served over HTTPS
   })
 }
 
