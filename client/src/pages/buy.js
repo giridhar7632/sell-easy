@@ -122,19 +122,20 @@ const Buy = ({ data, totalPages, category, servererror }) => {
                       All
                     </button>
                   </li>
-                  {categories.length &&
-                    categories.map((category) => (
-                      <li key={category._id}>
-                        <button
-                          onClick={() => handleCategoryChange(category._id)}
-                          className={`font-medium text-gray-600 ${
-                            selectedCategory === category._id ? 'text-teal-500' : ''
-                          }`}
-                        >
-                          {category.name}
-                        </button>
-                      </li>
-                    ))}
+                  {categories.length
+                    ? categories.map((category) => (
+                        <li key={category._id}>
+                          <button
+                            onClick={() => handleCategoryChange(category._id)}
+                            className={`font-medium text-gray-600 ${
+                              selectedCategory === category._id ? 'text-teal-500' : ''
+                            }`}
+                          >
+                            {category.name}
+                          </button>
+                        </li>
+                      ))
+                    : 'Loading...'}
                 </ul>
               )}
             </div>
