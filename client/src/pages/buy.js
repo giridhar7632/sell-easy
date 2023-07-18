@@ -125,8 +125,8 @@ const Buy = ({ data, totalPages, category, servererror }) => {
                         <li key={category._id}>
                           <button
                             onClick={() => handleCategoryChange(category._id)}
-                            className={`font-medium text-gray-600 ${
-                              selectedCategory === category._id ? 'text-teal-500' : ''
+                            className={`text-gray-600 ${
+                              selectedCategory === category._id ? 'font-medium text-teal-500' : ''
                             }`}
                           >
                             {category.name}
