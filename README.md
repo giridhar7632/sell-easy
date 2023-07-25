@@ -5,11 +5,11 @@
 </p>
 
 <h1 align="center">
-  Sell Easy | A place to easily sell or buy used good
+  Sell Easy
 </h1>
 
 <p align="center">
-A c2c ecommerce platform for easy selling of used goods inside an organization
+A c2c ecommerce platform for easy selling pre-loved goods within an organization
 </p>
 
 ✨ [Live Demo](https://sell-easy.vercel.app/)
@@ -20,4 +20,4 @@ A c2c ecommerce platform for easy selling of used goods inside an organization
 - [Express.js](https://expressjs.org/)
 - [MongoDB](https://mongodb.org/)
 - [Jest testing](https://jestjs.io/)
-- [Next.js frontend](https://github.com/giridhar7632/sell-easy/tree/main/client)
+- [Next.js](https://github.com/giridhar7632/sell-easy/tree/main/client) for frontend
