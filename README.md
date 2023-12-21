@@ -19,5 +19,4 @@ A c2c ecommerce platform for easy selling pre-loved goods within an organization
 - [Node.js](https://nodejs.org/)
 - [Express.js](https://expressjs.org/)
 - [MongoDB](https://mongodb.org/)
-- [Jest testing](https://jestjs.io/)
 - [Next.js frontend](https://github.com/giridhar7632/sell-easy/tree/main/client)
